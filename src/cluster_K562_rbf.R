@@ -1,0 +1,110 @@
+# ------------------------------------------
+# Set working directory and load libraries
+# ------------------------------------------
+if (interactive()){
+  cur.dir <- dirname(parent.frame(2)$ofile)
+  setwd(cur.dir)
+}
+library(mpgex)
+library(processHTS)
+R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
+
+# ------------------------------------------
+# Initialize parameters
+# ------------------------------------------
+rrbs_file   <- c("../datasets/ENCODE/BS-Seq/wgEncodeHaibMethylRrbsK562HaibSitesRep1.bed.gz",
+                 "../datasets/ENCODE/BS-Seq/wgEncodeHaibMethylRrbsK562HaibSitesRep2.bed.gz")
+rnaseq_file <- "../datasets/ENCODE/RNA-Seq/GENCODE-v3-K562-rep1.bed"
+hg19_file   <- "../datasets/ENCODE/hg19.chrom.sizes"
+
+upstream    <- -7000
+downstream  <- 7000
+cpg_density <- 15
+sd_thresh   <- 10e-02
+min_bs_cov  <- 4
+ignore_strand <- TRUE
+chr_discarded <- c("chrX", "chrY", "chrM")
+
+
+gene_expr_thresh <- FALSE
+gene_outl_thresh <- TRUE
+gene_log2_transf <- TRUE
+is_fpkm <- TRUE
+max_outl <- 600
+
+
+# ------------------------------------------
+# Read and preprocess HTS files
+# ------------------------------------------
+message("Promoter Region: ", downstream, "\n")
+HTS_data <- process_haib_caltech(bs_files        = rrbs_file,
+                                 rna_files       = rnaseq_file,
+                                 chrom_size_file = hg19_file,
+                                 chr_discarded   = chr_discarded,
+                                 upstream        = upstream,
+                                 downstream      = downstream,
+                                 cpg_density     = cpg_density,
+                                 sd_thresh       = sd_thresh,
+                                 min_bs_cov      = min_bs_cov,
+                                 ignore_strand   = ignore_strand)
+
+proc_data <- preprocess_data(HTS_data         = HTS_data,
+                             is_fpkm          = is_fpkm,
+                             max_outl         = max_outl,
+                             gene_expr_thresh = gene_expr_thresh,
+                             gene_outl_thresh = gene_outl_thresh,
+                             gene_log2_transf = gene_log2_transf)
+
+
+# ------------------------------------------
+# Final data:
+#   X: contains methylation data for each promoter region
+#   Y: contains the corresponding gene expression data
+# ------------------------------------------
+X <- proc_data$obs
+Y <- proc_data$Y
+
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+
+
+#--------------------------------------------
+# Parameters for EM algorithm
+#--------------------------------------------
+seed        <- 1234
+K           <- 5
+pi_k        <- NULL
+w           <- NULL
+basis       <- rbf.object(M = 4)
+em_max_iter <- 20
+epsilon_conv <- 1e-4
+opt_method  <- "CG"
+opt_itnmax  <- 50
+init_opt_itnmax <- 100
+is_parallel <- TRUE
+no_cores    <- 5
+is_verbose  <- TRUE
+
+mix_model <- mpgex_cluster(x     = X,
+                           K     = K,
+                           pi_k  = pi_k,
+                           w     = w,
+                           basis = basis,
+                           em_max_iter  = em_max_iter,
+                           epsilon_conv = epsilon_conv,
+                           opt_method   = opt_method,
+                           opt_itnmax   = opt_itnmax,
+                           init_opt_itnmax = init_opt_itnmax,
+                           is_parallel  = is_parallel,
+                           no_cores     = no_cores,
+                           is_verbose   = is_verbose)
+
+
+# --------------------------------------
+# Store the results
+# --------------------------------------
+filename <- paste0("../files/cluster_K562_7000_5_4_",
+                   format(Sys.time(), "%a%b%d%H%M"),
+                   ".RData")
+save(HTS_data, proc_data, mix_model, file = filename)
