@@ -17,8 +17,8 @@ rrbs_file   <- c("../datasets/ENCODE/BS-Seq/wgEncodeHaibMethylRrbsGm12878HaibSit
 rnaseq_file <- "../datasets/ENCODE/RNA-Seq/GENCODE-v3-GM12878-rep1.bed"
 hg19_file   <- "../datasets/ENCODE/hg19.chrom.sizes"
 
-upstream    <- -2000
-downstream  <- 2000
+upstream    <- -7000
+downstream  <- 7000
 cpg_density <- 15
 sd_thresh   <- 10e-02
 min_bs_cov  <- 4
@@ -74,28 +74,35 @@ opt_method  <- "CG"
 opt_itnmax  <- 50
 init_opt_itnmax <- 100
 is_parallel <- TRUE
-no_cores    <- 5
+no_cores    <- 10
 is_verbose  <- TRUE
 
-mix_model <- mpgex_cluster(x     = proc_data$obs,
-                           K     = K,
-                           pi_k  = pi_k,
-                           w     = w,
-                           basis = basis,
-                           em_max_iter  = em_max_iter,
-                           epsilon_conv = epsilon_conv,
-                           opt_method   = opt_method,
-                           opt_itnmax   = opt_itnmax,
-                           init_opt_itnmax = init_opt_itnmax,
-                           is_parallel  = is_parallel,
-                           no_cores     = no_cores,
-                           is_verbose   = is_verbose)
+# ---------------------------------
+# Create from 2 to 9 clusters
+# ---------------------------------
+mix_model <- list()
+for (i in 2:10){
+  K <- i
+  mix_model[[i]] <- mpgex_cluster(x     = proc_data$obs,
+                                  K     = K,
+                                  pi_k  = pi_k,
+                                  w     = w,
+                                  basis = basis,
+                                  em_max_iter  = em_max_iter,
+                                  epsilon_conv = epsilon_conv,
+                                  opt_method   = opt_method,
+                                  opt_itnmax   = opt_itnmax,
+                                  init_opt_itnmax = init_opt_itnmax,
+                                  is_parallel  = is_parallel,
+                                  no_cores     = no_cores,
+                                  is_verbose   = is_verbose)
+}
 
 
 # --------------------------------------
 # Store the results
 # --------------------------------------
-filename <- paste0("../files/cluster_GM_2000_5_4_",
+filename <- paste0("../files/cluster_model_GM_7000_4_",
                    format(Sys.time(), "%a%b%d%H%M"),
                    ".RData")
 save(HTS_data, proc_data, mix_model, file = filename)

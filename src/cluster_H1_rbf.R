@@ -56,15 +56,6 @@ proc_data <- preprocess_data(HTS_data         = HTS_data,
                              gene_log2_transf = gene_log2_transf)
 
 
-# ------------------------------------------
-# Final data:
-#   X: contains methylation data for each promoter region
-#   Y: contains the corresponding gene expression data
-# ------------------------------------------
-X <- proc_data$obs
-Y <- proc_data$Y
-
-
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 
@@ -86,7 +77,7 @@ is_parallel <- TRUE
 no_cores    <- 5
 is_verbose  <- TRUE
 
-mix_model <- mpgex_cluster(x     = X,
+mix_model <- mpgex_cluster(x     = proc_data$obs,
                            K     = K,
                            pi_k  = pi_k,
                            w     = w,

@@ -27,16 +27,14 @@ plot_scatt_regr_test(out_prof, main_lab = "K562 Methylation Profile", is_margins
 plot_scatt_regr_test(out_mean, main_lab = "K562 Mean Methylation", is_margins = TRUE)
 
 
-k562_prof <- ggplot_scatt_regr_test(out_prof, main_lab = "K562 Methylation Profile", is_margins = TRUE)
-k562_mean <- ggplot_scatt_regr_test(out_mean, main_lab = "K562 Mean Methylation", is_margins = TRUE)
+k562_prof <- ggplot_scatt_regr_test2(out_prof, main_lab = "K562 Methylation Profile", is_margins = TRUE)
+k562_mean <- ggplot_scatt_regr_test2(out_mean, main_lab = "K562 Mean Methylation", is_margins = TRUE)
 
 corr_plot <- plot_grid(k562_prof, k562_mean, labels = c("A", "B"), 
                               label_size = 22, ncol = 2, nrow = 1)
 
 save_plot("../figures/k562-scatter.pdf", corr_plot, ncol = 2, nrow = 1,
           base_height = 7, base_width = 7)
-
-
 
 #ggsave("../figures/gg-k562-scatter-profile.pdf", k562_prof, width = 8, height = 8, units = "in")
 #ggsave("../figures/gg-k562-scatter-mean.pdf", k562_mean, width = 8, height = 8, units = "in")

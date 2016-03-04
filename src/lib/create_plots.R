@@ -70,6 +70,54 @@ ggplot_scatt_regr_test <- function(output, main_lab = "Methylation Profile", is_
   gg <- ggplot(out_plot, aes(x = pred, y = meas)) + 
     geom_point(pch = 16, col = "#0000ff56", cex = 3) + 
     theme_bw() +
+    theme(axis.title.x = element_text(color="black", size=18),
+          axis.title.y = element_text(color="black", size=18),
+          plot.title = element_text(face="bold", color = "black", size=20),
+          axis.text = element_text(size = 15.5),
+          panel.grid.major = element_blank(), 
+          #panel.grid.minor = element_blank(),
+          panel.border = element_rect(colour = "black", size = 0.5)) + 
+    labs(x = "predicted expression (log2)", y = "measured expression (log2)", 
+         title=main_lab) + 
+    scale_x_continuous(breaks = seq(-2, 8, by = 2), limits=xlim) + 
+    scale_y_continuous(breaks = seq(-2, 8, by = 2), limits=ylim) + 
+    geom_abline(intercept = stats::coef(my_lm)[1],
+                slope = stats::coef(my_lm)[2],
+                col="red", lty = 4, lwd = 1) +
+    geom_text(data = data.frame(), 
+              aes(-3.85, 7.85, label = paste0("r = ", r, "\n", "RMSE = ", rmse)),
+              size = 5, colour = "black", 
+              hjust = 0)
+  
+  return(gg)
+}
+
+
+ggplot_scatt_regr_test2 <- function(output, main_lab = "Methylation Profile", is_margins = FALSE){
+  if (is_margins){
+    ylim=c(-3.35, 8.02)
+    xlim=c(-3.85, 7.02)
+  }else{
+    max_data <- max(output$test_pred, output$test$y)
+    min_data <- min(output$test_pred, output$test$y)
+    ylim=c(min_data, max_data)
+    xlim=c(min_data, max_data)
+  }
+  
+  # Compute correlation
+  r <- round(stats::cor(output$test_pred, output$test$y), 2)
+  # Compute RMSE
+  rmse   <- round(output$test_errors$rmse, 2)
+  # Perform simple linear regression using lm
+  my_lm = lm(output$test$y ~ output$test_pred)
+  
+  out_plot <- data.frame(pred = output$test_pred, 
+                         meas = output$test$y)
+  
+  
+  gg <- ggplot(out_plot, aes(x = pred, y = meas)) + 
+    geom_point(pch = 16, col = "#0000ff56", cex = 3) + 
+    theme_bw() +
     theme(axis.title.x = element_text(color="black", size=19),
           axis.title.y = element_text(color="black", size=19),
           plot.title = element_text(face="bold", color = "black", size=23),
@@ -91,6 +139,7 @@ ggplot_scatt_regr_test <- function(output, main_lab = "Methylation Profile", is_
   
   return(gg)
 }
+
 
 
 #' Plot scatterplot with correlation between predicted and measured gene
