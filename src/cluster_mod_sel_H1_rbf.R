@@ -74,14 +74,14 @@ opt_method  <- "CG"
 opt_itnmax  <- 50
 init_opt_itnmax <- 100
 is_parallel <- TRUE
-no_cores    <- 10
+no_cores    <- 15
 is_verbose  <- TRUE
 
 # ---------------------------------
 # Create from 2 to 9 clusters
 # ---------------------------------
 mix_model <- list()
-for (i in 2:10){
+for (i in 2:15){
   K <- i
   mix_model[[i]] <- mpgex_cluster(x     = proc_data$obs,
                                   K     = K,

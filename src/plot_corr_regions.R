@@ -16,9 +16,9 @@ R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 # -----------------------------------------
 # Initialize variables
 # -----------------------------------------
-k562_file <- "../files/region_K562_WedMar022118.RData"
-gm_file   <- "../files/region_GM_WedMar022115.RData"
-h1_file   <- "../files/region_H1_WedMar022115.RData"
+k562_file <- "../files/region_K562_MonMar071737.RData"
+gm_file   <- "../files/region_GM_MonMar071735.RData"
+h1_file   <- "../files/region_H1_MonMar071735.RData"
 
 
 # -----------------------------------------
