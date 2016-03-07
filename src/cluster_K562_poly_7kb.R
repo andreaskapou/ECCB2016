@@ -67,12 +67,12 @@ seed        <- 1234
 K           <- 5
 pi_k        <- NULL
 w           <- NULL
-basis       <- polynomial.object(M = 5)
+basis       <- polynomial.object(M = 6)
 em_max_iter <- 20
 epsilon_conv <- 1e-4
 opt_method  <- "CG"
 opt_itnmax  <- 50
-init_opt_itnmax <- 50
+init_opt_itnmax <- 100
 is_parallel <- TRUE
 no_cores    <- 5
 is_verbose  <- TRUE
