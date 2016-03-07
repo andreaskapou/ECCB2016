@@ -20,7 +20,6 @@ k562_file <- "../files/region_K562_MonMar071737.RData"
 gm_file   <- "../files/region_GM_MonMar071735.RData"
 h1_file   <- "../files/region_H1_MonMar071735.RData"
 
-
 # -----------------------------------------
 # Load saved data for K562
 # -----------------------------------------
@@ -70,3 +69,21 @@ h1_mean <- compute_corr(out       = out_mean,
                         iter      = iter, 
                         cell_line = "H1-hESC",
                         method    = "Mean")
+
+
+
+
+k562_file2 <- "../files/region_K562_MonMar071815.RData"
+gm_file2   <- "../files/region_GM_MonMar071813.RData"
+h1_file2   <- "../files/region_H1_MonMar071813.RData"
+
+
+load(h1_file)
+
+for (i in 1:(iter-1))
+  print(length(proc_data[[i+1]]$Y))
+
+
+load(h1_file2)
+for (i in 1:(iter-1))
+  print(length(proc_data[[i+1]]$Y))

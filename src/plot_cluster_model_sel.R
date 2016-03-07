@@ -14,9 +14,9 @@ R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 # -----------------------------------------
 # Initialize variables
 # -----------------------------------------
-k562_file <- "../files/cluster_model_K562_5000_4_SatMar050033.RData"
-gm_file   <- "../files/cluster_model_GM_5000_4_SatMar050011.RData"
-h1_file   <- "../files/cluster_model_H1_5000_4_FriMar042317.RData"
+k562_file <- "../files/cluster_model_K562_7000_4_SatMar050213.RData"
+gm_file   <- "../files/cluster_model_GM_7000_4_SatMar050113.RData"
+h1_file   <- "../files/cluster_model_H1_7000_4_SatMar050105.RData"
 
 # -----------------------------------------
 # Load saved data for K562
