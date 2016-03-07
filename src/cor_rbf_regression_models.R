@@ -242,5 +242,6 @@ filename <- paste0("../files/cor_rbf_regr_models_",
                    ".RData")
 save(K562_HTS_data, GM_HTS_data, H1_HTS_data, 
      K562_proc_data, GM_proc_data, H1_proc_data, 
-     k562_out_prof, gm_out_prof, h1_out_prof, file = filename)
+     k562_out_prof, gm_out_prof, h1_out_prof, 
+     model_name, file = filename)
 
