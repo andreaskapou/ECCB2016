@@ -158,21 +158,21 @@ model_boxplot <- ggplot(corr, aes(method, r)) +
                              "Mean")) +
   facet_grid( . ~ cell_line ) +
   theme_bw() +
-  #coord_flip() + 
+  # coord_flip() + 
   labs(list(title= "", 
             x = "", 
             y = "Pearson's r")) +
   theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
-        axis.text.y = element_text(size=15), 
-        plot.title = element_text(face="bold", color = "black", size=19),
+        axis.text.y = element_text(size = 16), 
+        plot.title = element_text(face="bold", color = "black", size=23),
         #panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),
-        axis.title.y = element_text(size = 17),
-        text = element_text(size=20))
-  #guides(fill = FALSE)
-  #ggtitle("Model performances across cell lines")
+        axis.title.y = element_text(size = 20),
+        text = element_text(size=21)) + 
+  ggtitle("Model performances across cell lines")
+  # guides(fill = FALSE)
 
-#ggsave("../figures/model-corr-boxplot2.pdf", model_boxplot, width = 4, height = 9, units = "in")
+ggsave("../figures/model-corr-boxplot.pdf", model_boxplot, width = 11.5, height = 7, units = "in")
 
 
 

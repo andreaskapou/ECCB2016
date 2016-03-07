@@ -137,11 +137,18 @@ x <- HTS_data$methyl_region[[t]][,1]
 y <- HTS_data$methyl_region[[t]][,3]/HTS_data$methyl_region[[t]][,2]
 xl <- seq(min(x),max(x), (max(x) - min(x))/1000)
 plot(x, y, col = "blue3", pch = 22, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
-     xlab = "region x", ylab = "methylation level", main = "Gene FAM20C")
+     xlab = NA, ylab = NA, cex.axis = 1.3)
+mtext(side = 1, "genomic region x", line = 3, cex = 1.8)
+mtext(side = 2, "methylation level", line = 3, cex = 1.8)
+title(main="Gene FAM20C", line = 1, cex.main=1.6)
 lines(x = xl, y = eval_probit_function(out_mean$basis, xl, out_mean$W_opt[t,]), 
       col = 'cornflowerblue', lwd = 3, lty = 2)
 lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
       col = 'blue2', lwd = 3)
+
+
+dev.print(pdf, "../figures/fam20c.pdf", width = 9, height = 7)
+dev.off()
 
 
 #
@@ -153,8 +160,14 @@ x <- HTS_data$methyl_region[[t]][,1]
 y <- HTS_data$methyl_region[[t]][,3]/HTS_data$methyl_region[[t]][,2]
 xl <- seq(min(x),max(x), (max(x) - min(x))/1000)
 plot(x, y, col = "red3", pch = 21, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
-     xlab = "region x", ylab = "methylation level", main = "Gene DOCK5")
+     xlab = NA, ylab = NA, cex.axis = 1.3)
+mtext(side = 1, "genomic region x", line = 3, cex = 1.8)
+mtext(side = 2, "methylation level", line = 3, cex = 1.8)
+title(main="Gene DOCK5", line = 1, cex.main=1.6)
 lines(x = xl, y = eval_probit_function(out_mean$basis, xl, out_mean$W_opt[t,]), 
       col = 'coral', lwd = 3, lty = 2)
 lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
       col = 'red2', lwd = 3)
+
+dev.print(pdf, "../figures/dock5.pdf", width = 9, height = 7)
+dev.off()

@@ -118,10 +118,10 @@ ggplot_scatt_regr_test2 <- function(output, main_lab = "Methylation Profile", is
   gg <- ggplot(out_plot, aes(x = pred, y = meas)) + 
     geom_point(pch = 16, col = "#0000ff56", cex = 3) + 
     theme_bw() +
-    theme(axis.title.x = element_text(color="black", size=19),
-          axis.title.y = element_text(color="black", size=19),
-          plot.title = element_text(face="bold", color = "black", size=23),
-          axis.text = element_text(size = 16),
+    theme(axis.title.x = element_text(color="black", size = 22),
+          axis.title.y = element_text(color="black", size = 22),
+          plot.title = element_text(face="bold", color = "black", size = 24),
+          axis.text = element_text(size = 18),
           panel.grid.major = element_blank(), 
           #panel.grid.minor = element_blank(),
           panel.border = element_rect(colour = "black", size = 0.5)) + 
@@ -133,8 +133,8 @@ ggplot_scatt_regr_test2 <- function(output, main_lab = "Methylation Profile", is
                 slope = stats::coef(my_lm)[2],
                 col="red", lty = 4, lwd = 1) +
     geom_text(data = data.frame(), 
-              aes(-3.85, 7.85, label = paste0("r = ", r, "\n", "RMSE = ", rmse)),
-              size = 6, colour = "black", 
+              aes(4.1, -2.6, label = paste0("r = ", r, "\n", "RMSE = ", rmse)),
+              size = 6.6, colour = "black", 
               hjust = 0)
   
   return(gg)
@@ -259,10 +259,10 @@ ggplot_scatt_across_cell_line <- function(output, main_lab = "Methylation Profil
   gg <- ggplot(out_plot, aes(x = pred, y = meas)) + 
     geom_point(pch = 16, col="#0000ff56", cex = 1.6) + 
     theme_bw() +
-    theme(axis.title.x = element_text(color="black", size=13.5),
-          axis.title.y = element_text(color="black", size=13.5),
-          plot.title = element_text(face="bold", color = "black", size=16.5),
-          axis.text = element_text(size = 12),
+    theme(axis.title.x = element_text(color="black", size=16),
+          axis.title.y = element_text(color="black", size=16),
+          plot.title = element_text(face="bold", color = "black", size=18),
+          axis.text = element_text(size = 14.5),
           panel.grid.major = element_blank(), 
           #panel.grid.minor = element_blank(),
           panel.border = element_rect(colour = "black", size = 0.5)) + 
@@ -274,8 +274,8 @@ ggplot_scatt_across_cell_line <- function(output, main_lab = "Methylation Profil
                 slope = stats::coef(my_lm)[2],
                 col="red", lty = 4, lwd = 1) +
     geom_text(data = data.frame(), 
-              aes(4.82, -2.35, label = paste0("r = ", r, "\n", "RMSE = ", rmse)),
-              size = 3.7, colour = "black", 
+              aes(4, -2.35, label = paste0("r = ", r, "\n", "RMSE = ", rmse)),
+              size = 5.2, colour = "black", 
               hjust = 0)
   
   return(gg)
@@ -322,13 +322,14 @@ plot_confusion_corr_matrix <- function(out_GM, out_GM_K562, out_GM_H1,
   
   confusion_corr_mat <- ggplot() +
     geom_tile(aes(x = C2, y = C1, fill = r), 
-              data = df, color = "black", size = 0.1) +
-    theme(axis.text = element_text(size = 12), 
-          plot.title = element_text(face="plain", size = 16.5),
-          legend.title = element_text(size = 14),
-          legend.text = element_text(size = 7.5)) +
+              data = df, color = "black", size = 0.1,
+              position = "identity") +
+    theme(axis.text = element_text(size = 14), 
+          plot.title = element_text(face="plain", size = 19),
+          legend.title = element_text(size = 16),
+          legend.text = element_text(size = 9.5)) +
     geom_text(aes(x = C2, y = C1, label = sprintf("%.2f", r)),
-              data = df, size = 4.5, colour = "black") +
+              data = df, size = 5.6, colour = "black") +
     scale_fill_gradient2(low = "#006400", mid = "#f2f6c3", 
                          high = "#cd0000", limits = c(0, 1)) +
     labs(x = "",y = "") +
