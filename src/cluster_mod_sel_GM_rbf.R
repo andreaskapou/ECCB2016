@@ -17,8 +17,8 @@ rrbs_file   <- c("../datasets/ENCODE/BS-Seq/wgEncodeHaibMethylRrbsGm12878HaibSit
 rnaseq_file <- "../datasets/ENCODE/RNA-Seq/GENCODE-v3-GM12878-rep1.bed"
 hg19_file   <- "../datasets/ENCODE/hg19.chrom.sizes"
 
-upstream    <- -7000
-downstream  <- 7000
+upstream    <- -5000
+downstream  <- 5000
 cpg_density <- 15
 sd_thresh   <- 10e-02
 min_bs_cov  <- 4
@@ -102,7 +102,7 @@ for (i in 2:10){
 # --------------------------------------
 # Store the results
 # --------------------------------------
-filename <- paste0("../files/cluster_model_GM_7000_4_",
+filename <- paste0("../files/cluster_model_GM_5000_4_",
                    format(Sys.time(), "%a%b%d%H%M"),
                    ".RData")
 save(HTS_data, proc_data, mix_model, file = filename)
