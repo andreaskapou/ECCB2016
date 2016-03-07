@@ -18,8 +18,8 @@ rrbs_file   <- c("../datasets/ENCODE/BS-Seq/wgEncodeHaibMethylRrbsK562HaibSitesR
 rnaseq_file <- "../datasets/ENCODE/RNA-Seq/GENCODE-v3-K562-rep1.bed"
 hg19_file   <- "../datasets/ENCODE/hg19.chrom.sizes"
 
-upstream    <- c(-1000, -2000, -2500, -3000, -4000, -5000, -6000, -7000)
-downstream  <- c(1000, 2000, 2500, 3000, 4000, 5000, 6000, 7000)
+upstream    <- c(-1000, -2000, -3000, -4000, -5000, -6000, -7000, -8000, -9000, -10000)
+downstream  <- c(1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000)
 cpg_density <- 15
 sd_thresh   <- 10e-02
 min_bs_cov  <- 4
