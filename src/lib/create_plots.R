@@ -285,26 +285,27 @@ ggplot_scatt_across_cell_line <- function(output, main_lab = "Methylation Profil
 plot_confusion_corr_matrix <- function(out_GM, out_GM_K562, out_GM_H1, 
                                        out_K562, out_K562_GM, out_K562_H1,
                                        out_H1, out_H1_GM, out_H1_K562, 
+                                       K562, GM, H1,
                                        title_lab = "Correlation"){
   
   # ----------------------------------------
   # Compute correlations from GM
   # ----------------------------------------
-  cor_gm <- round(cor(out_GM$test_pred, out_GM$test$y), 3)
+  cor_gm <- round(cor(GM$test_pred, GM$test$y), 3)
   cor_gm_k562 <- round(cor(out_GM_K562$test_pred, out_GM_K562$test$y), 3)
   cor_gm_h1 <- round(cor(out_GM_H1$test_pred, out_GM_H1$test$y), 3)
   
   # ----------------------------------------
   # Compute correlations from K562
   # ----------------------------------------
-  cor_k562 <- round(cor(out_K562$test_pred, out_K562$test$y), 3)
+  cor_k562 <- round(cor(K562$test_pred, K562$test$y), 3)
   cor_k562_gm <- round(cor(out_K562_GM$test_pred, out_K562_GM$test$y), 3)
   cor_k562_h1 <- round(cor(out_K562_H1$test_pred, out_K562_H1$test$y), 3)
   
   # ----------------------------------------
   # Compute correlations from H1-hESC
   # ----------------------------------------
-  cor_h1 <- round(cor(out_H1$test_pred, out_H1$test$y), 3)
+  cor_h1 <- round(cor(H1$test_pred, H1$test$y), 3)
   cor_h1_gm <- round(cor(out_H1_GM$test_pred, out_H1_GM$test$y), 3)
   cor_h1_k562 <- round(cor(out_H1_K562$test_pred, out_H1_K562$test$y), 3)
 

@@ -199,6 +199,6 @@ corr_plot <- ggdraw() +
   draw_plot(model_boxplot, 0, 0, 1, 0.5) +
   draw_plot_label(c("A", "C", "B"), c(0, 0, 0.5), c(1, 0.5, 1), size = 22)
 
-save_plot("../figures/model-performance.pdf", corr_plot, ncol = 2, nrow = 2,
-          base_height = 6, base_width = 6)
+# save_plot("../figures/model-performance.pdf", corr_plot, ncol = 2, nrow = 2,
+#           base_height = 6, base_width = 6)
 

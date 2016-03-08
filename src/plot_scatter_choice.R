@@ -21,14 +21,20 @@ load(k562_file)
 k562_prof <- ggplot_scatt_regr_test2(out_prof, main_lab = "K562 Methylation Profile", is_margins = TRUE)
 k562_mean <- ggplot_scatt_regr_test2(out_mean, main_lab = "K562 Mean Methylation", is_margins = TRUE)
 
+pvalue_prof = cor.test(as.vector(out_prof$test_pred), out_prof$test$y, alternative = "greater")$p.value
+pvalue_mean = cor.test(as.vector(out_mean$test_pred), out_mean$test$y, alternative = "greater")$p.value
+
 corr_plot <- plot_grid(k562_prof, k562_mean, labels = c("A", "B"), 
                               label_size = 29, ncol = 2, nrow = 1)
 
-save_plot("../figures/k562-scatter.pdf", corr_plot, ncol = 2, nrow = 1,
-          base_height = 6.5, base_width = 6.5)
+# save_plot("../figures/k562-scatter.pdf", corr_plot, ncol = 2, nrow = 1,
+#           base_height = 6.5, base_width = 6.5)
 
-#ggsave("../figures/gg-k562-scatter-profile.pdf", k562_prof, width = 8, height = 8, units = "in")
-#ggsave("../figures/gg-k562-scatter-mean.pdf", k562_mean, width = 8, height = 8, units = "in")
+
+
+
+# ggsave("../figures/gg-k562-scatter-profile.pdf", k562_prof, width = 8, height = 8, units = "in")
+# ggsave("../figures/gg-k562-scatter-mean.pdf", k562_mean, width = 8, height = 8, units = "in")
 
 # t = 195
 # plot(out_prof$basis, proc_data$obs[[t]], out_prof$W_opt[t,])

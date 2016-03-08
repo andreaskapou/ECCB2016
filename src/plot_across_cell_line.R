@@ -169,14 +169,34 @@ corr_mean <- ggplot_scatt_across_cell_line(output = out_GM_mean_K562,
                                            main_lab = expression(Mean~GM12878 %->% K562), 
                                            is_margins = TRUE)
 
+k562_file <- "../files/corr_K562_WedMar021931.RData"
+gm_file   <- "../files/corr_GM_WedMar021943.RData"
+h1_file   <- "../files/corr_H1_WedMar021830.RData"
+
+load(k562_file)
+K562_profile <- out_prof[[1]]
+K562_mean <- out_mean[[1]]
+
+load(gm_file)
+GM_profile <- out_prof[[1]]
+GM_mean <- out_mean[[1]]
+
+load(h1_file)
+H1_profile <- out_prof[[1]]
+H1_mean <- out_mean[[1]]
+
+
 confus_prof <- plot_confusion_corr_matrix(GM_out_prof, out_GM_prof_K562, out_GM_prof_H1, 
                                           K562_out_prof, out_K562_prof_GM, out_K562_prof_H1,
                                           H1_out_prof, out_H1_prof_GM, out_H1_prof_K562, 
+                                          K562_profile, GM_profile, H1_profile,
                                           title_lab = "Methylation Profiles Correlation")
+
 
 confus_mean <- plot_confusion_corr_matrix(GM_out_mean, out_GM_mean_K562, out_GM_mean_H1, 
                                           K562_out_mean, out_K562_mean_GM, out_K562_mean_H1,
                                           H1_out_mean, out_H1_mean_GM, out_H1_mean_K562, 
+                                          K562_mean, GM_mean, H1_mean,
                                           title_lab = "Mean Methylation Correlation")
 
 
