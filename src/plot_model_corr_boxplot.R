@@ -262,24 +262,24 @@ model_boxplot <- ggplot(corr, aes(method, r)) +
 #------------------------------------------------------------------------------
 
 
-# ------------------------------------
-# Plot everything in the same figure
-# ------------------------------------
-k562_file <- "../files/choice_corr_K562_ThuMar031032.RData"
-
-load(k562_file)
-k562_prof <- ggplot_scatt_regr_test(out_prof, main_lab = "K562 Methylation Profile", is_margins = TRUE)
-k562_mean <- ggplot_scatt_regr_test(out_mean, main_lab = "K562 Mean Methylation", is_margins = TRUE)
-
+# # ------------------------------------
+# # Plot everything in the same figure
+# # ------------------------------------
+# k562_file <- "../files/choice_corr_K562_ThuMar031032.RData"
+# 
+# load(k562_file)
+# k562_prof <- ggplot_scatt_regr_test(out_prof, main_lab = "K562 Methylation Profile", is_margins = TRUE)
+# k562_mean <- ggplot_scatt_regr_test(out_mean, main_lab = "K562 Mean Methylation", is_margins = TRUE)
+# 
 # grid.arrange(arrangeGrob(k562_prof, k562_mean), model_boxplot, ncol = 2)
-
-
-corr_plot <- ggdraw() +
-  draw_plot(k562_prof, 0, 0.5, 0.5, .5) +
-  draw_plot(k562_mean, 0.5, 0.5, .5, .5) +
-  draw_plot(model_boxplot, 0, 0, 1, 0.5) +
-  draw_plot_label(c("A", "C", "B"), c(0, 0, 0.5), c(1, 0.5, 1), size = 22)
-
+# 
+# 
+# corr_plot <- ggdraw() +
+#   draw_plot(k562_prof, 0, 0.5, 0.5, .5) +
+#   draw_plot(k562_mean, 0.5, 0.5, .5, .5) +
+#   draw_plot(model_boxplot, 0, 0, 1, 0.5) +
+#   draw_plot_label(c("A", "C", "B"), c(0, 0, 0.5), c(1, 0.5, 1), size = 22)
+# 
 # save_plot("../figures/model-performance.pdf", corr_plot, ncol = 2, nrow = 2,
-#           base_height = 6, base_width = 6)
+#            base_height = 6, base_width = 6)
 

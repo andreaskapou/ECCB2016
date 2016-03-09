@@ -30,6 +30,9 @@ corr_plot <- plot_grid(k562_prof, k562_mean, labels = c("A", "B"),
 # save_plot("../figures/k562-scatter.pdf", corr_plot, ncol = 2, nrow = 1,
 #           base_height = 6.5, base_width = 6.5)
 
+# ggsave("../figures/gg-k562-scatter-profile.pdf", k562_prof, width = 8, height = 8, units = "in")
+# ggsave("../figures/gg-k562-scatter-mean.pdf", k562_mean, width = 8, height = 8, units = "in")
+
 
 
 # --------------------------------
@@ -61,17 +64,3 @@ gm_mean = cor.test(GM_mean$test_pred, GM_mean$test$y, alternative = "greater")
 
 h1_prof = cor.test(H1_profile$test_pred, H1_profile$test$y, alternative = "greater")
 h1_mean = cor.test(H1_mean$test_pred, H1_mean$test$y, alternative = "greater")
-
-
-# ggsave("../figures/gg-k562-scatter-profile.pdf", k562_prof, width = 8, height = 8, units = "in")
-# ggsave("../figures/gg-k562-scatter-mean.pdf", k562_mean, width = 8, height = 8, units = "in")
-
-# t = 195
-# plot(out_prof$basis, proc_data$obs[[t]], out_prof$W_opt[t,])
-# plot(out_mean$basis, proc_data$obs[[t]], out_mean$W_opt[t,])
-
-# plot_scatt_regr_test(out_prof, main_lab = "K562 Methylation Profile", is_margins = TRUE)
-# plot_scatt_regr_test(out_mean, main_lab = "K562 Mean Methylation", is_margins = TRUE)
-
-# plot_scatt_regr_train(out_prof, is_margins = TRUE)
-# plot_scatt_regr_train(out_mean, main_lab = "Mean Methylation", is_margins = TRUE)

@@ -71,8 +71,6 @@ h1_mean <- compute_corr(out       = out_mean,
                         method    = "Mean")
 
 
-
-
 k562_file2 <- "../files/region_K562_MonMar071815.RData"
 gm_file2   <- "../files/region_GM_MonMar071813.RData"
 h1_file2   <- "../files/region_H1_MonMar071813.RData"

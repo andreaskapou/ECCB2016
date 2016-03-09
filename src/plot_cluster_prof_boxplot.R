@@ -14,9 +14,9 @@ R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 # -----------------------------------------
 # Initialize variables
 # -----------------------------------------
-k562_file <- "../files/cluster_K562_7000_5_4_FriMar041743.RData"
-gm_file   <- "../files/cluster_GM_7000_5_4_FriMar041253.RData"
-h1_file   <- "../files/cluster_H1_7000_5_4_FriMar041724.RData"
+k562_file <- "../files/cluster_K562_7000_5_3_7_MonMar071952.RData"
+gm_file   <- "../files/cluster_GM_7000_5_3_7_MonMar071942.RData"
+h1_file   <- "../files/cluster_H1_7000_5_3_7_MonMar071944.RData"
 
 # -----------------------------------------
 # Load saved data for K562
@@ -34,6 +34,7 @@ k562_expr <- list()
 k562_gene_ids <- list()
 for (i in 1:K){
   k562_labels[[i]] <- which(k562_mix_model$labels == i)
+  print(length(k562_labels[[i]]))
   k562_expr[[i]] <- k562_proc_data$Y[k562_labels[[i]]]
   k562_gene_ids[[i]] <- k562_proc_data$genes$ensembl_id[k562_labels[[i]]]
   #write(k562_gene_ids[[i]], paste0("../results/k562_7000_", K, "_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
@@ -55,6 +56,7 @@ gm_expr <- list()
 gm_gene_ids <- list()
 for (i in 1:K){
   gm_labels[[i]] <- which(gm_mix_model$labels == i)
+  print(length(gm_labels[[i]]))
   gm_expr[[i]] <- gm_proc_data$Y[gm_labels[[i]]]
   gm_gene_ids[[i]] <- gm_proc_data$genes$ensembl_id[gm_labels[[i]]]
   #write(gm_gene_ids[[i]], paste0("../results/gm_7000_", K, "_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
@@ -75,6 +77,7 @@ h1_expr <- list()
 h1_gene_ids <- list()
 for (i in 1:K){
   h1_labels[[i]] <- which(h1_mix_model$labels == i)
+  print(length(h1_labels[[i]]))
   h1_expr[[i]] <- h1_proc_data$Y[h1_labels[[i]]]
   h1_gene_ids[[i]] <- h1_proc_data$genes$ensembl_id[h1_labels[[i]]]
   #write(h1_gene_ids[[i]], paste0("../results/h1_7000_", K, "_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
@@ -82,21 +85,66 @@ for (i in 1:K){
 
 
 
-
-# Plot methylation profiles for K = 5 clusters for DF Old mouse model
-plot_cluster_prof(k562_mix_model, k562_mix_model$basis, FALSE)
-# Corresponding gene expression levels for each cluster K
-plot_cluster_box(k562_expr, FALSE)
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
+# -------------------------------------
+# Preprocess data for plotting
+# -------------------------------------
+merged_meth <- list(k562_mix_model, gm_mix_model, h1_mix_model)
+merged_expr <- list(k562_expr, gm_expr, h1_expr)
+cell_lines <- c("K562", "GM12878", "H1-hESC")
+x_len   <- 2000
 
-# Plot methylation profiles for K = 5 clusters for DF Old mouse model
-plot_cluster_prof(gm_mix_model, gm_mix_model$basis, FALSE)
-# Corresponding gene expression levels for each cluster K
-plot_cluster_box(gm_expr, FALSE)
+
+# ----------------------------------------------
+# Create data frame containing all experimental 
+# output for clustered methylation profiles
+# ----------------------------------------------
+df_meth <- data.frame(xs = numeric(),
+                      y = numeric(), 
+                      cluster = character(), 
+                      cell_line = character(),
+                      stringsAsFactors=TRUE)
+for (i in 1:length(merged_meth)){
+  for (k in 1:K){
+    xs <- seq(-1, 1,len = x_len) # create some values
+    y <- as.vector(eval_probit_function(merged_meth[[i]]$basis, 
+                                        xs, 
+                                        merged_meth[[i]]$w[, k]))
+    cluster <- paste("Cluster", k)
+    cell_line <- cell_lines[i]
+    dd <- data.frame(xs, y, cluster, cell_line, stringsAsFactors = TRUE)
+    df_meth <- data.frame(rbind(df_meth, dd))
+  }
+}
 
 
-# Plot methylation profiles for K = 5 clusters for DF Old mouse model
-plot_cluster_prof(h1_mix_model, h1_mix_model$basis, FALSE)
-# Corresponding gene expression levels for each cluster K
-plot_cluster_box(h1_expr, FALSE)
+# ----------------------------------------------
+# Create data frame containing all experimental 
+# output for  clustered gene expression levels
+# ----------------------------------------------
+df_expr <- data.frame(expr = numeric(), 
+                 cluster = character(), 
+                 cell_line = character(),
+                 stringsAsFactors=TRUE)
+
+for (i in 1:length(merged_expr)){
+  for (k in 1:K){
+    expr <- merged_expr[[i]][[k]]
+    cluster <- paste("Cluster", k)
+    cell_line <- cell_lines[i]
+    dd <- data.frame(expr, cluster, cell_line, stringsAsFactors = TRUE)
+    df_expr <- data.frame(rbind(df_expr, dd))
+  }
+}
+
+
+
+# ---------------------------------------------
+# Create plots
+# ---------------------------------------------
+gg_prof <- ggplot_cluster_prof(df = df_meth)
+
+gg_expr <- ggplot_cluster_expr(df = df_expr)

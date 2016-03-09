@@ -363,6 +363,34 @@ plot_cluster_prof <- function(model, basis, add_clust = FALSE, main_lab = "Clust
 }
 
 
+
+ggplot_cluster_prof <- function(df, main_lab = "Clustered methylation profiles"){
+  prof_plot <- ggplot(df, aes(x = xs, y = y, group = cluster)) + 
+    geom_line(aes(colour = cluster), size = 1.1) + 
+    scale_colour_manual(values=c("firebrick", "cornflowerblue", "coral", 
+                                 "darkolivegreen4", "darkgoldenrod2"), 
+                        name="Cluster",
+                        #breaks=c("PrF", "PrR", "PrC", "Pr", "M"),
+                        labels=c("1", "2", "3", "4", "5")) +
+    theme_bw() + 
+    facet_grid( . ~ cell_line ) +
+    theme(axis.title.x = element_text(color="black", size=22),
+          axis.title.y = element_text(color="black", size=22),
+          plot.title = element_text(face="bold", color = "black", size=25),
+          axis.text = element_text(size = 18),
+          panel.grid.major = element_blank(), 
+          #panel.grid.minor = element_blank(),
+          panel.border = element_rect(colour = "black", size = 0.5),
+          legend.title = element_text(size = 18),
+          legend.text = element_text(size = 16)) +     
+    labs(x = "promoter region", 
+         y = "methylation level", 
+         title=main_lab)
+  
+  return(prof_plot)
+}
+
+
 plot_cluster_box <- function(gene_expr, add_clust = FALSE, main_lab = "Gene expression levels"){
   col <- c("salmon3", "black", "blue", "red3", "darkgreen")
   if (add_clust){
@@ -370,4 +398,30 @@ plot_cluster_box <- function(gene_expr, add_clust = FALSE, main_lab = "Gene expr
   }
   boxplot(gene_expr, col=col, notch=T, xlab="Cluster K",
           ylab="expression level", main=main_lab)
+}
+
+
+
+ggplot_cluster_expr <- function(df, main_lab = "Gene expression levels"){
+  ggplot(df_expr, aes(cluster, expr)) +
+    geom_boxplot(aes(fill = cluster), notch = TRUE) + 
+    scale_fill_manual(values=c("firebrick", "cornflowerblue", "coral", 
+                               "darkolivegreen4", "darkgoldenrod2"), 
+                      name="Cluster",
+                      #breaks=c("PrF", "PrR", "PrC", "Pr", "M"),
+                      labels=c("1", "2", "3", "4", "5")) +
+    facet_grid( . ~ cell_line ) +
+    theme_bw() +
+    labs(list(title= "", 
+              x = "", 
+              y = "expression level")) +
+    scale_y_continuous(breaks = seq(-4, 8, by = 2)) + 
+    theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
+          axis.text.y = element_text(size = 16), 
+          plot.title = element_text(face="bold", color = "black", size=23),
+          #panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          axis.title.y = element_text(size = 20),
+          text = element_text(size=21)) + 
+    ggtitle(main_lab)
 }
