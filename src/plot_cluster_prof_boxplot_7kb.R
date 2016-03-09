@@ -14,9 +14,22 @@ R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 # -----------------------------------------
 # Initialize variables
 # -----------------------------------------
-k562_file <- "../files/cluster_K562_7000_6_3_7_WedMar091529.RData"
-gm_file   <- "../files/cluster_GM_7000_6_3_7_WedMar091515.RData"
-h1_file   <- "../files/cluster_H1_7000_6_3_7_WedMar091514.RData"
+# k562_file <- "../files/deep_cluster_K562_7000_5_3_7_WedMar091538.RData"
+# gm_file   <- "../files/deep_cluster_GM_7000_5_3_7_WedMar091525.RData"
+# h1_file   <- "../files/deep_cluster_H1_7000_5_3_7_WedMar091531.RData"
+# 
+# k562_file <- "../files/deep_cluster_K562_7000_5_3_WedMar091528.RData"
+# gm_file   <- "../files/deep_cluster_GM_7000_5_3_WedMar091514.RData"
+# h1_file   <- "../files/deep_cluster_H1_7000_5_3_WedMar091515.RData"
+
+k562_file <- "../files/deep_cluster_K562_7000_5_4_WedMar091836.RData"
+gm_file   <- "../files/deep_cluster_GM_7000_5_4_WedMar091825.RData"
+h1_file   <- "../files/deep_cluster_H1_7000_5_4_WedMar091821.RData"
+
+# k562_file <- "../files/deep_cluster_K562_7000_5_4_7_WedMar091846.RData"
+# gm_file   <- "../files/deep_cluster_GM_7000_5_4_7_WedMar091833.RData"
+# h1_file   <- "../files/deep_cluster_H1_7000_5_4_7_WedMar091829.RData"
+
 
 # -----------------------------------------
 # Load saved data for K562
@@ -37,7 +50,7 @@ for (i in 1:K){
   print(length(k562_labels[[i]]))
   k562_expr[[i]] <- k562_proc_data$Y[k562_labels[[i]]]
   k562_gene_ids[[i]] <- k562_proc_data$genes$ensembl_id[k562_labels[[i]]]
-  #write(k562_gene_ids[[i]], paste0("../results/k562_7000_", K, "_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
+  write(k562_gene_ids[[i]], paste0("../results/k562_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
 }
 
 
@@ -54,12 +67,15 @@ gm_mix_model <- mix_model
 gm_labels <- list()
 gm_expr <- list()
 gm_gene_ids <- list()
+
+gm_clust_ids <- c(5,2,3,4,1)
+
 for (i in 1:K){
-  gm_labels[[i]] <- which(gm_mix_model$labels == i)
+  gm_labels[[i]] <- which(gm_mix_model$labels == gm_clust_ids[i])
   print(length(gm_labels[[i]]))
   gm_expr[[i]] <- gm_proc_data$Y[gm_labels[[i]]]
   gm_gene_ids[[i]] <- gm_proc_data$genes$ensembl_id[gm_labels[[i]]]
-  #write(gm_gene_ids[[i]], paste0("../results/gm_7000_", K, "_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
+  write(gm_gene_ids[[i]], paste0("../results/gm_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
 }
 
 
@@ -75,12 +91,15 @@ h1_mix_model <- mix_model
 h1_labels <- list()
 h1_expr <- list()
 h1_gene_ids <- list()
+
+h1_clust_ids <- c(4,1,3,2,5)
+
 for (i in 1:K){
-  h1_labels[[i]] <- which(h1_mix_model$labels == i)
+  h1_labels[[i]] <- which(h1_mix_model$labels == h1_clust_ids[i])
   print(length(h1_labels[[i]]))
   h1_expr[[i]] <- h1_proc_data$Y[h1_labels[[i]]]
   h1_gene_ids[[i]] <- h1_proc_data$genes$ensembl_id[h1_labels[[i]]]
-  #write(h1_gene_ids[[i]], paste0("../results/h1_7000_", K, "_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
+  write(h1_gene_ids[[i]], paste0("../results/h1_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
 }
 
 
@@ -97,6 +116,7 @@ merged_expr <- list(k562_expr, gm_expr, h1_expr)
 cell_lines <- c("K562", "GM12878", "H1-hESC")
 x_len   <- 2000
 
+mat_clust_ids <- matrix(cbind(seq(1:5), gm_clust_ids, h1_clust_ids), ncol = 3)
 
 # ----------------------------------------------
 # Create data frame containing all experimental 
@@ -112,7 +132,7 @@ for (i in 1:length(merged_meth)){
     xs <- seq(-1, 1,len = x_len) # create some values
     y <- as.vector(eval_probit_function(merged_meth[[i]]$basis, 
                                         xs, 
-                                        merged_meth[[i]]$w[, k]))
+                                        merged_meth[[i]]$w[, mat_clust_ids[k,i]]))
     cluster <- paste("Cluster", k)
     cell_line <- cell_lines[i]
     dd <- data.frame(xs, y, cluster, cell_line, stringsAsFactors = TRUE)
@@ -126,9 +146,9 @@ for (i in 1:length(merged_meth)){
 # output for  clustered gene expression levels
 # ----------------------------------------------
 df_expr <- data.frame(expr = numeric(), 
-                 cluster = character(), 
-                 cell_line = character(),
-                 stringsAsFactors=TRUE)
+                      cluster = character(), 
+                      cell_line = character(),
+                      stringsAsFactors=TRUE)
 
 for (i in 1:length(merged_expr)){
   for (k in 1:K){
@@ -148,24 +168,3 @@ for (i in 1:length(merged_expr)){
 gg_prof <- ggplot_cluster_prof(df = df_meth)
 
 gg_expr <- ggplot_cluster_expr(df = df_expr)
-
-
-
-
-# # Plot methylation profiles for K = 5 clusters for DF Old mouse model
-# plot_cluster_prof(k562_mix_model, k562_mix_model$basis, TRUE)
-# # Corresponding gene expression levels for each cluster K
-# plot_cluster_box(k562_expr, TRUE)
-# 
-# 
-# 
-# # Plot methylation profiles for K = 5 clusters for DF Old mouse model
-# plot_cluster_prof(gm_mix_model, gm_mix_model$basis, TRUE)
-# # Corresponding gene expression levels for each cluster K
-# plot_cluster_box(gm_expr, TRUE)
-# 
-# 
-# # Plot methylation profiles for K = 5 clusters for DF Old mouse model
-# plot_cluster_prof(h1_mix_model, h1_mix_model$basis, TRUE)
-# # Corresponding gene expression levels for each cluster K
-# plot_cluster_box(h1_expr, TRUE)
