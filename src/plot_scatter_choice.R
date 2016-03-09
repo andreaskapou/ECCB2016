@@ -32,6 +32,36 @@ corr_plot <- plot_grid(k562_prof, k562_mean, labels = c("A", "B"),
 
 
 
+# --------------------------------
+# Statistical significance tests
+# --------------------------------
+
+k562_file <- "../files/corr_K562_WedMar021931.RData"
+gm_file   <- "../files/corr_GM_WedMar021943.RData"
+h1_file   <- "../files/corr_H1_WedMar021830.RData"
+
+load(k562_file)
+K562_profile <- out_prof[[1]]
+K562_mean <- out_mean[[1]]
+
+load(gm_file)
+GM_profile <- out_prof[[1]]
+GM_mean <- out_mean[[1]]
+
+load(h1_file)
+H1_profile <- out_prof[[1]]
+H1_mean <- out_mean[[1]]
+
+
+k562_prof = cor.test(K562_profile$test_pred, K562_profile$test$y, alternative = "greater")
+k562_mean = cor.test(K562_mean$test_pred, K562_mean$test$y, alternative = "greater")
+
+gm_prof = cor.test(GM_profile$test_pred, GM_profile$test$y, alternative = "greater")
+gm_mean = cor.test(GM_mean$test_pred, GM_mean$test$y, alternative = "greater")
+
+h1_prof = cor.test(H1_profile$test_pred, H1_profile$test$y, alternative = "greater")
+h1_mean = cor.test(H1_mean$test_pred, H1_mean$test$y, alternative = "greater")
+
 
 # ggsave("../figures/gg-k562-scatter-profile.pdf", k562_prof, width = 8, height = 8, units = "in")
 # ggsave("../figures/gg-k562-scatter-mean.pdf", k562_mean, width = 8, height = 8, units = "in")
