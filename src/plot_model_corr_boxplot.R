@@ -127,18 +127,99 @@ corr$method <- factor(corr$method, levels = c("Profile full",
 # ---------------------------------------
 # Paired Wilcox test
 # ---------------------------------------
+
+# K562 against all other cell lines
+wilcox.test(corr$r[corr$method == "Profile full" & corr$cell_line == "K562"], 
+            corr$r[corr$method == "Profile full" & corr$cell_line == "GM12878"], 
+            paired = TRUE, 
+            alternative = "greater",
+            exact = FALSE)$p.value  # 4.784587e-05
+wilcox.test(corr$r[corr$method == "Profile full" & corr$cell_line == "K562"], 
+            corr$r[corr$method == "Profile full" & corr$cell_line == "H1-hESC"], 
+            paired = TRUE, 
+            alternative = "greater",
+            exact = FALSE)$p.value  # 4.784587e-05
+
+# K562 profile against K562 mean
 wilcox.test(corr$r[corr$method == "Profile full" & corr$cell_line == "K562"], 
             corr$r[corr$method == "Mean" & corr$cell_line == "K562"], 
             paired = TRUE, 
-            alternative = "greater", 
-            exact = TRUE)$p.value  # 9.536743e-07
+            alternative = "greater",
+            exact = FALSE)$p.value  # 4.784587e-05
 
+# K562 profile full against K562 Profile
+wilcox.test(corr$r[corr$method == "Profile full" & corr$cell_line == "K562"], 
+            corr$r[corr$method == "Profile" & corr$cell_line == "K562"], 
+            paired = TRUE, 
+            alternative = "greater",
+            exact = FALSE)$p.value  # 4.784587e-05
+
+# Profile against mean using all the cell lines
 wilcox.test(corr$r[corr$method == "Profile full"], 
             corr$r[corr$method == "Mean"], 
             paired = TRUE, 
             alternative = "greater", 
-            exact = TRUE)$p.value  # 8.673617e-19
+            exact = FALSE)$p.value  # 8.356643e-12
 
+
+# H1 against all other cell lines
+wilcox.test(corr$r[corr$method == "Profile full" & corr$cell_line == "H1-hESC"], 
+            corr$r[corr$method == "Profile full" & corr$cell_line == "K562"], 
+            paired = TRUE, 
+            alternative = "less",
+            exact = FALSE)$p.value  # 4.784587e-05
+
+wilcox.test(corr$r[corr$method == "Profile full" & corr$cell_line == "H1-hESC"], 
+            corr$r[corr$method == "Profile full" & corr$cell_line == "GM12878"], 
+            paired = TRUE, 
+            alternative = "less",
+            exact = FALSE)$p.value  # 4.784587e-05
+
+
+
+
+# K562 profile against K562 Profile+rmse
+wilcox.test(corr$r[corr$method == "Profile" & corr$cell_line == "K562"], 
+            corr$r[corr$method == "Profile+rmse" & corr$cell_line == "K562"], 
+            paired = TRUE, 
+            alternative = "less",
+            exact = FALSE)$p.value  # 4.784587e-05
+# K562 profile against K562 Profile+#CpG
+wilcox.test(corr$r[corr$method == "Profile" & corr$cell_line == "K562"], 
+            corr$r[corr$method == "Profile+#CpG" & corr$cell_line == "K562"], 
+            paired = TRUE, 
+            alternative = "less",
+            exact = FALSE)$p.value  # 0.2220406
+
+
+
+# GM12878 profile against GM12878 Profile+rmse
+wilcox.test(corr$r[corr$method == "Profile" & corr$cell_line == "GM12878"], 
+            corr$r[corr$method == "Profile+rmse" & corr$cell_line == "GM12878"], 
+            paired = TRUE, 
+            alternative = "less",
+            exact = FALSE)$p.value  # 4.784587e-05
+# GM12878 profile against GM12878 Profile+#CpG
+wilcox.test(corr$r[corr$method == "Profile" & corr$cell_line == "GM12878"], 
+            corr$r[corr$method == "Profile+#CpG" & corr$cell_line == "GM12878"], 
+            paired = TRUE, 
+            alternative = "less",
+            exact = FALSE)$p.value  # 0.1801876
+
+
+
+# H1-hESC profile against H1-hESC Profile+rmse
+wilcox.test(corr$r[corr$method == "Profile" & corr$cell_line == "H1-hESC"], 
+            corr$r[corr$method == "Profile+rmse" & corr$cell_line == "H1-hESC"], 
+            paired = TRUE, 
+            alternative = "less",
+            exact = FALSE)$p.value  # 0.0001363533
+# H1-hESC profile against H1-hESC Profile+#CpG
+wilcox.test(corr$r[corr$method == "Profile" & corr$cell_line == "H1-hESC"], 
+            corr$r[corr$method == "Profile+#CpG" & corr$cell_line == "H1-hESC"], 
+            paired = TRUE, 
+            alternative = "less",
+            exact = FALSE)$p.value  # 0.02094403
 
 
 # ---------------------------------------
@@ -172,7 +253,7 @@ model_boxplot <- ggplot(corr, aes(method, r)) +
   ggtitle("Model performances across cell lines")
   # guides(fill = FALSE)
 
-ggsave("../figures/model-corr-boxplot.pdf", model_boxplot, width = 11.5, height = 7, units = "in")
+# ggsave("../figures/model-corr-boxplot.pdf", model_boxplot, width = 11.5, height = 7, units = "in")
 
 
 

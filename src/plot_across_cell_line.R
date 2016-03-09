@@ -203,5 +203,5 @@ confus_mean <- plot_confusion_corr_matrix(GM_out_mean, out_GM_mean_K562, out_GM_
 across_cell_plot <- plot_grid(confus_prof, corr_prof, confus_mean,  corr_mean, labels = c("A", "C", "B", ""), 
           label_size = 25, ncol = 2, nrow = 2)
 
-save_plot("../figures/corr-across-cell-lines.pdf", across_cell_plot, ncol = 2, nrow = 2,
-          base_aspect_ratio = 1.35)
+# save_plot("../figures/corr-across-cell-lines.pdf", across_cell_plot, ncol = 2, nrow = 2,
+#           base_aspect_ratio = 1.35)
