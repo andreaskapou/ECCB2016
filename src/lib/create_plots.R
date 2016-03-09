@@ -356,9 +356,7 @@ plot_cluster_prof <- function(model, basis, add_clust = FALSE, main_lab = "Clust
 
   if (add_clust){
     lines(x=xs, y=eval_probit_function(basis, xs, model$w[,6]),
-          col="cyan", lwd=3)
-    lines(x=xs, y=eval_probit_function(basis, xs, model$w[,7]),
-          col="darkgoldenrod1", lwd=3)
+          col="darkgoldenrod3", lwd=3)
   }
 }
 
@@ -374,18 +372,20 @@ ggplot_cluster_prof <- function(df, main_lab = "Clustered methylation profiles")
                         labels=c("1", "2", "3", "4", "5")) +
     theme_bw() + 
     facet_grid( . ~ cell_line ) +
-    theme(axis.title.x = element_text(color="black", size=22),
-          axis.title.y = element_text(color="black", size=22),
-          plot.title = element_text(face="bold", color = "black", size=25),
-          axis.text = element_text(size = 18),
+    labs(x = "", 
+         y = "methylation level") +
+    ggtitle(main_lab) + 
+    theme(axis.title.x = element_text(color="black", size=16),
+          axis.title.y = element_text(color="black", size=20),
+          plot.title = element_text(face="bold", color = "black", size=22),
+          axis.text = element_text(size = 16),
           panel.grid.major = element_blank(), 
           #panel.grid.minor = element_blank(),
           panel.border = element_rect(colour = "black", size = 0.5),
           legend.title = element_text(size = 18),
-          legend.text = element_text(size = 16)) +     
-    labs(x = "promoter region", 
-         y = "methylation level", 
-         title=main_lab)
+          legend.text = element_text(size = 16),
+          text = element_text(size=21)) +     
+    scale_y_continuous(breaks = seq(0, 1, by = 0.2))
   
   return(prof_plot)
 }
@@ -394,7 +394,7 @@ ggplot_cluster_prof <- function(df, main_lab = "Clustered methylation profiles")
 plot_cluster_box <- function(gene_expr, add_clust = FALSE, main_lab = "Gene expression levels"){
   col <- c("salmon3", "black", "blue", "red3", "darkgreen")
   if (add_clust){
-    col <- c(col, "cyan", "darkgoldenrod1")
+    col <- c(col, "darkgoldenrod3")
   }
   boxplot(gene_expr, col=col, notch=T, xlab="Cluster K",
           ylab="expression level", main=main_lab)
@@ -415,13 +415,83 @@ ggplot_cluster_expr <- function(df, main_lab = "Gene expression levels"){
     labs(list(title= "", 
               x = "", 
               y = "expression level")) +
+    ggtitle(main_lab) +
     scale_y_continuous(breaks = seq(-4, 8, by = 2)) + 
     theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
           axis.text.y = element_text(size = 16), 
-          plot.title = element_text(face="bold", color = "black", size=23),
+          plot.title = element_text(face="bold", color = "black", size=22),
           #panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
           axis.title.y = element_text(size = 20),
-          text = element_text(size=21)) + 
-    ggtitle(main_lab)
+          legend.title = element_text(size = 18),
+          legend.text = element_text(size = 16),
+          text = element_text(size=21))
+}
+
+
+
+create_quad_venn <- function(n1, n2, n3, n4, filename = "venn_diagram.png"){
+  library(VennDiagram)
+  
+  n1 <- read.table(file = n1)
+  n2 <- read.table(file = n2)
+  n3 <- read.table(file = n3)
+  n4 <- read.table(file = n4)
+  
+  venn.diagram(
+    x = list(
+      DO = n1$V1,
+      DY = n2$V1,
+      NO = n3$V1,
+      NY = n4$V1
+    ),
+    filename = filename,
+    col = "black",
+    imagetype = "png",
+    lty = "dotted",
+    lwd = 4,
+    fill = c("cornflowerblue", "green", "yellow", "darkorchid1"),
+    alpha = 0.50,
+    label.col = c("orange", "white", "darkorchid4", "white", "white",
+                  "white", "white", "white", "darkblue", "white",
+                  "white", "white", "white", "darkgreen", "white"),
+    cex = 2.5,
+    fontfamily = "serif",
+    fontface = "bold",
+    cat.col = c("darkblue", "darkgreen", "orange", "darkorchid4"),
+    cat.cex = 2.5,
+    cat.fontfamily = "serif"
+  )
+}
+
+
+create_triple_venn <- function(n1, n2, n3, filename = "venn_diagram.png"){
+  library(VennDiagram)
+  
+  n1 <- read.table(file = n1)
+  n2 <- read.table(file = n2)
+  n3 <- read.table(file = n3)
+  
+  venn.diagram(
+    x = list(
+      K562 = n1$V1,
+      GM12878 = n2$V1,
+      H1_hESC = n3$V1
+    ),
+    filename = filename,
+    col = "transparent",
+    fill = c("red", "blue", "green"),
+    imagetype = "png",
+    alpha = 0.5,
+    label.col = c("darkred", "white", "darkblue", "white", "white", "white", "darkgreen"),
+    cex = 2.5,
+    fontfamily = "serif",
+    fontface = "bold",
+    cat.default.pos = "text",
+    cat.col = c("darkred", "darkblue", "darkgreen"),
+    cat.cex = 2.5,
+    cat.fontfamily = "serif",
+    cat.dist = c(0.06, 0.06, 0.03),
+    cat.pos = 0
+  )
 }
