@@ -375,17 +375,19 @@ ggplot_cluster_prof <- function(df, main_lab = "Clustered methylation profiles")
     labs(x = "", 
          y = "methylation level") +
     ggtitle(main_lab) + 
-    theme(axis.title.x = element_text(color="black", size=16),
+    scale_y_continuous(breaks = seq(0, 1, by = 0.2)) + 
+    theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
+          axis.text.y = element_text(size = 17),
+          axis.title.x = element_text(color="black", size=16),
           axis.title.y = element_text(color="black", size=20),
           plot.title = element_text(face="bold", color = "black", size=22),
-          axis.text = element_text(size = 16),
+          #axis.text = element_text(size = 16),
           panel.grid.major = element_blank(), 
           #panel.grid.minor = element_blank(),
           panel.border = element_rect(colour = "black", size = 0.5),
           legend.title = element_text(size = 18),
           legend.text = element_text(size = 16),
-          text = element_text(size=21)) +     
-    scale_y_continuous(breaks = seq(0, 1, by = 0.2))
+          text = element_text(size=21))
   
   return(prof_plot)
 }
@@ -416,13 +418,13 @@ ggplot_cluster_expr <- function(df, main_lab = "Gene expression levels"){
               x = "", 
               y = "expression level")) +
     ggtitle(main_lab) +
-    scale_y_continuous(breaks = seq(-4, 8, by = 2)) + 
+    scale_y_continuous(breaks = seq(-4.5, 8.5, by = 2)) + 
     theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
           axis.text.y = element_text(size = 16), 
           plot.title = element_text(face="bold", color = "black", size=22),
           #panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
-          axis.title.y = element_text(size = 20),
+          axis.title.y = element_text(color="black", size = 20),
           legend.title = element_text(size = 18),
           legend.text = element_text(size = 16),
           text = element_text(size=21))
@@ -479,8 +481,9 @@ create_triple_venn <- function(n1, n2, n3, filename = "venn_diagram.png"){
       H1_hESC = n3$V1
     ),
     filename = filename,
-    col = "transparent",
-    fill = c("red", "blue", "green"),
+    col = "black",
+    lty = "dotted",
+    fill = c("red2", "blue", "green"),
     imagetype = "png",
     alpha = 0.5,
     label.col = c("darkred", "white", "darkblue", "white", "white", "white", "darkgreen"),
@@ -491,7 +494,7 @@ create_triple_venn <- function(n1, n2, n3, filename = "venn_diagram.png"){
     cat.col = c("darkred", "darkblue", "darkgreen"),
     cat.cex = 2.5,
     cat.fontfamily = "serif",
-    cat.dist = c(0.06, 0.06, 0.03),
-    cat.pos = 0
+    cat.dist = c(0.172, 0.182, -0.14),
+    cat.pos = c(350, 10, 0)
   )
 }

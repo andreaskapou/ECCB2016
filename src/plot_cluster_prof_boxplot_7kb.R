@@ -8,6 +8,7 @@ if (interactive()){
 library(mpgex)
 library(processHTS)
 library(ggplot2)
+library(cowplot)
 R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 
 
@@ -50,7 +51,7 @@ for (i in 1:K){
   print(length(k562_labels[[i]]))
   k562_expr[[i]] <- k562_proc_data$Y[k562_labels[[i]]]
   k562_gene_ids[[i]] <- k562_proc_data$genes$ensembl_id[k562_labels[[i]]]
-  write(k562_gene_ids[[i]], paste0("../results/k562_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
+  #write(k562_gene_ids[[i]], paste0("../results/k562_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
 }
 
 
@@ -75,7 +76,7 @@ for (i in 1:K){
   print(length(gm_labels[[i]]))
   gm_expr[[i]] <- gm_proc_data$Y[gm_labels[[i]]]
   gm_gene_ids[[i]] <- gm_proc_data$genes$ensembl_id[gm_labels[[i]]]
-  write(gm_gene_ids[[i]], paste0("../results/gm_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
+  #write(gm_gene_ids[[i]], paste0("../results/gm_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
 }
 
 
@@ -99,8 +100,35 @@ for (i in 1:K){
   print(length(h1_labels[[i]]))
   h1_expr[[i]] <- h1_proc_data$Y[h1_labels[[i]]]
   h1_gene_ids[[i]] <- h1_proc_data$genes$ensembl_id[h1_labels[[i]]]
-  write(h1_gene_ids[[i]], paste0("../results/h1_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
+  #write(h1_gene_ids[[i]], paste0("../results/h1_7000_", K, "_4_clust_", i, "_", format(Sys.time(), "%a%b%d%H%M"), ".txt"))
 }
+
+
+total_k562 <- vector(mode = "numeric")
+total_gm <- vector(mode = "numeric")
+total_h1 <- vector(mode = "numeric")
+for (k in 1:K){
+  total_k562 <- c(total_k562, k562_gene_ids[[k]])
+  total_gm <- c(total_gm, gm_gene_ids[[k]])
+  total_h1 <- c(total_h1, h1_gene_ids[[k]])
+}
+
+inters_cell <- Reduce(intersect, list(total_k562, total_gm, total_h1))
+
+
+comm_k562_ids <- list()
+comm_gm_ids <- list()
+comm_h1_ids <- list()
+for (k in 1:K){
+  comm_k562_ids[[k]] <- Reduce(intersect, list(inters_cell, k562_gene_ids[[k]]))
+  #write(comm_k562_ids[[k]], paste0("../results/comm_k562_7000_", K, "_4_clust_", k, ".txt"))
+  comm_gm_ids[[k]] <- Reduce(intersect, list(inters_cell, gm_gene_ids[[k]]))
+  #write(comm_gm_ids[[k]], paste0("../results/comm_gm_7000_", K, "_4_clust_", k, ".txt"))
+  comm_h1_ids[[k]] <- Reduce(intersect, list(inters_cell, h1_gene_ids[[k]]))
+  #write(comm_h1_ids[[k]], paste0("../results/comm_h1_7000_", K, "_4_clust_", k, ".txt"))
+}
+
+
 
 
 
@@ -162,9 +190,14 @@ for (i in 1:length(merged_expr)){
 
 
 
-# ---------------------------------------------
+# ----------------------------------------------
 # Create plots
-# ---------------------------------------------
-gg_prof <- ggplot_cluster_prof(df = df_meth)
+# ----------------------------------------------
+gg_prof <- ggplot_cluster_prof(df = df_meth, main_lab = "Clustered methylation profiles")
+gg_expr <- ggplot_cluster_expr(df = df_expr, main_lab = "Clustered expression levels")
 
-gg_expr <- ggplot_cluster_expr(df = df_expr)
+cluster_plot <- plot_grid(gg_prof, gg_expr, labels = c("A", "B"), 
+                              label_size = 25, ncol = 1, nrow = 2)
+
+# save_plot("../figures/clustered-profiles.pdf", cluster_plot, ncol = 3, nrow = 2,
+#            base_aspect_ratio = 1.1)
