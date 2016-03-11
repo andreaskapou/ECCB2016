@@ -8,6 +8,7 @@ if (interactive()){
 library(mpgex)
 library(processHTS)
 library(ggplot2)
+library(VennDiagram)
 R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 #----------------
 # Create Venn diagrams for K = 5, RBF = 4
