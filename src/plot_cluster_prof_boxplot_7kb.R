@@ -197,7 +197,7 @@ gg_prof <- ggplot_cluster_prof(df = df_meth, main_lab = "Clustered methylation p
 gg_expr <- ggplot_cluster_expr(df = df_expr, main_lab = "Clustered expression levels")
 
 cluster_plot <- plot_grid(gg_prof, gg_expr, labels = c("A", "B"), 
-                              label_size = 25, ncol = 1, nrow = 2)
+                              label_size = 20, ncol = 1, nrow = 2)
 
-# save_plot("../figures/clustered-profiles.pdf", cluster_plot, ncol = 3, nrow = 2,
-#            base_aspect_ratio = 1.1)
+save_plot("../figures/cluster-profiles.pdf", cluster_plot, ncol = 3, nrow = 2,
+           base_aspect_ratio = 1.4)

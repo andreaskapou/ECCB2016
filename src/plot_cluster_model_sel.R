@@ -26,8 +26,6 @@ k562_HTS_data <- HTS_data
 k562_proc_data <- proc_data
 k562_mix_model <- mix_model
 
-K <- k562_mix_model$K
-
 k562_BIC <- vector(mode = "numeric", length = 9)
 for (i in 2:10){
   k562_BIC[i-1] <- k562_mix_model[[i]]$BIC
@@ -69,3 +67,22 @@ for (i in 2:10){
 
 plot(-h1_BIC,type="o", xlab="K", ylab="BIC score", col="red2", 
      main="H1-hESC cell line", lwd=2)
+
+
+
+
+k562_labels <- list()
+gm_labels <- list()
+h1_labels <- list()
+for (i in 2:length(k562_mix_model)){
+  K <- k562_mix_model[[i]]$K
+  k562_labels[[i]] <- vector(mode = "numeric")
+  gm_labels[[i]] <- vector(mode = "numeric")
+  h1_labels[[i]] <- vector(mode = "numeric")
+  for (k in 1:K){
+    k562_labels[[i]][k] <- length(which(k562_mix_model[[i]]$labels == k))
+    gm_labels[[i]][k] <- length(which(gm_mix_model[[i]]$labels == k))
+    h1_labels[[i]][k] <- length(which(h1_mix_model[[i]]$labels == k))
+  }
+}
+
