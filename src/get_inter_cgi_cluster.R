@@ -8,10 +8,7 @@ if (interactive()){
 library(mpgex)
 library(processHTS)
 library(ggplot2)
-library(VennDiagram)
 R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
-
-
 
 # -----------------------------------------
 # Read CGI file
