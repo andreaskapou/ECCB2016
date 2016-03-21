@@ -20,7 +20,7 @@ hg19_file   <- "../datasets/ENCODE/hg19.chrom.sizes"
 upstream    <- -7000
 downstream  <- 7000
 cpg_density <- 15
-sd_thresh   <- 7e-02
+sd_thresh   <- 10e-02
 min_bs_cov  <- 4
 ignore_strand <- TRUE
 chr_discarded <- c("chrX", "chrY", "chrM")
@@ -67,7 +67,7 @@ seed        <- 1234
 K           <- 5
 pi_k        <- NULL
 w           <- NULL
-basis       <- rbf.object(M = 3)
+basis       <- rbf.object(M = 4)
 em_max_iter <- 20
 epsilon_conv <- 1e-4
 opt_method  <- "CG"
@@ -95,7 +95,7 @@ mix_model <- mpgex_cluster(x     = proc_data$obs,
 # --------------------------------------
 # Store the results
 # --------------------------------------
-filename <- paste0("../files/cluster_K562_7000_5_3_7_",
+filename <- paste0("../files/final_cluster_K562_7000_5_4_",
                    format(Sys.time(), "%a%b%d%H%M"),
                    ".RData")
 save(HTS_data, proc_data, mix_model, file = filename)
