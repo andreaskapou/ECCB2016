@@ -32,6 +32,18 @@ h1_file   <- "../files/deep_cluster_H1_7000_5_4_WedMar091821.RData"
 # h1_file   <- "../files/deep_cluster_H1_7000_5_4_7_WedMar091829.RData"
 
 
+
+k562_file <- "../files/final_cluster_K562_7000_5_4_MonMar211638.RData"
+gm_file   <- "../files/final_cluster_GM_7000_5_4_MonMar211630.RData"
+h1_file   <- "../files/final_cluster_H1_7000_5_4_MonMar211632.RData"
+
+
+k562_file <- "../files/final_cluster_K562_7000_5_9_MonMar211636.RData"
+gm_file   <- "../files/final_cluster_GM_7000_5_9_MonMar211630.RData"
+h1_file   <- "../files/final_cluster_H1_7000_5_9_MonMar211629.RData"
+
+
+
 # -----------------------------------------
 # Load saved data for K562
 # -----------------------------------------
