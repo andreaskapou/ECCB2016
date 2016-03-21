@@ -13,6 +13,8 @@ R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 # ------------------------------------------
 # Initialize parameters
 # ------------------------------------------
+source("init_regr_parameters.R")
+
 rrbs_file   <- c("../datasets/ENCODE/BS-Seq/wgEncodeHaibMethylRrbsK562HaibSitesRep1.bed.gz",
                  "../datasets/ENCODE/BS-Seq/wgEncodeHaibMethylRrbsK562HaibSitesRep2.bed.gz")
 rnaseq_file <- "../datasets/ENCODE/RNA-Seq/GENCODE-v3-K562-rep1.bed"
@@ -20,34 +22,6 @@ hg19_file   <- "../datasets/ENCODE/hg19.chrom.sizes"
 
 upstream    <- c(-1000, -2000, -3000, -4000, -5000, -6000, -7000, -8000, -9000, -10000)
 downstream  <- c(1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000)
-cpg_density <- 15
-sd_thresh   <- 10e-02
-min_bs_cov  <- 4
-ignore_strand <- TRUE
-chr_discarded <- c("chrX", "chrY", "chrM")
-
-gene_expr_thresh <- FALSE
-gene_outl_thresh <- TRUE
-gene_log2_transf <- TRUE
-is_fpkm <- TRUE
-max_outl <- 600
-
-
-#--------------------------------------------
-# Parameters for regression model
-#--------------------------------------------
-seed        <- 1234
-formula     <- y ~ .
-model_name  <- "svm"
-train_perc  <- 0.7
-opt_method  <- "CG"
-opt_itnmax  <- 50
-is_parallel <- TRUE
-no_cores    <- 10
-is_summary  <- TRUE
-
-basis_prof <- rbf.object(M = 5, gamma = 14)
-basis_mean <- polynomial.object(M = 0)
 
 HTS_data <- list()
 proc_data <- list()
