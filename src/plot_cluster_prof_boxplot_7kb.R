@@ -189,7 +189,6 @@ for (i in 1:length(merged_expr)){
 }
 
 
-
 # ----------------------------------------------
 # Create plots
 # ----------------------------------------------
@@ -197,7 +196,73 @@ gg_prof <- ggplot_cluster_prof(df = df_meth, main_lab = "Clustered methylation p
 gg_expr <- ggplot_cluster_expr(df = df_expr, main_lab = "Clustered expression levels")
 
 cluster_plot <- plot_grid(gg_prof, gg_expr, labels = c("A", "B"), 
-                              label_size = 20, ncol = 1, nrow = 2)
+                          label_size = 20, ncol = 1, nrow = 2)
 
-save_plot("../figures/cluster-profiles.pdf", cluster_plot, ncol = 3, nrow = 2,
-           base_aspect_ratio = 1.4)
+# save_plot("../figures/cluster-profiles.pdf", cluster_plot, ncol = 3, nrow = 2,
+#            base_aspect_ratio = 1.4)
+
+
+# ---------------------------------------
+# Paired Wilcox test
+# ---------------------------------------
+
+# K562 against all other cell lines
+wilcox.test(df_expr$expr[df_expr$cluster == "Cluster 2" & df_expr$cell_line == "K562"], 
+            df_expr$expr[df_expr$cluster == "Cluster 3" & df_expr$cell_line == "K562"], 
+            paired = FALSE, 
+            alternative = "greater",
+            exact = FALSE)$p.value  # 4.004366e-69
+
+
+# K562 against all other cell lines
+wilcox.test(df_expr$expr[df_expr$cluster == "Cluster 2" & df_expr$cell_line == "GM12878"], 
+            df_expr$expr[df_expr$cluster == "Cluster 5" & df_expr$cell_line == "GM12878"], 
+            paired = FALSE, 
+            alternative = "greater",
+            exact = FALSE)$p.value  # 6.531164e-36
+
+
+# K562 against all other cell lines
+wilcox.test(df_expr$expr[df_expr$cluster == "Cluster 2" & df_expr$cell_line == "H1-hESC"], 
+            df_expr$expr[df_expr$cluster == "Cluster 3" & df_expr$cell_line == "H1-hESC"], 
+            paired = FALSE, 
+            alternative = "greater",
+            exact = FALSE)$p.value  # 9.790536e-13
+
+
+
+# K562 against all other cell lines
+wilcox.test(df_expr$expr[df_expr$cluster == "Cluster 2"], 
+            df_expr$expr[df_expr$cluster == "Cluster 3"], 
+            paired = FALSE, 
+            alternative = "greater",
+            exact = FALSE)$p.value  # 1.519798e-112
+
+
+# K562 against all other cell lines
+t.test(df_expr$expr[df_expr$cluster == "Cluster 2"], 
+       df_expr$expr[df_expr$cluster == "Cluster 3"], 
+       paired = FALSE, 
+       alternative = "greater",
+       exact = FALSE)$p.value  # 2.113056e-117
+
+# K562 against all other cell lines
+t.test(df_expr$expr[df_expr$cluster == "Cluster 2"], 
+       df_expr$expr[df_expr$cluster == "Cluster 1"], 
+       paired = FALSE, 
+       alternative = "greater",
+       exact = FALSE)$p.value  # 2.113056e-117
+
+# K562 against all other cell lines
+t.test(df_expr$expr[df_expr$cluster == "Cluster 2"], 
+       df_expr$expr[df_expr$cluster == "Cluster 4"], 
+       paired = FALSE, 
+       alternative = "greater",
+       exact = FALSE)$p.value  # 2.113056e-117
+
+# K562 against all other cell lines
+t.test(df_expr$expr[df_expr$cluster == "Cluster 2"], 
+       df_expr$expr[df_expr$cluster == "Cluster 5"], 
+       paired = FALSE, 
+       alternative = "greater",
+       exact = FALSE)$p.value  # 2.113056e-117

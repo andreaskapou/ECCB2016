@@ -12,7 +12,7 @@ library(ggplot2)
 library(earth)
 library(randomForest)
 library(e1071)
-R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
+R.utils::sourceDirectory("lib", modifiedOnly = FALSE)
 
 
 # -----------------------------------------

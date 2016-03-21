@@ -13,7 +13,7 @@ R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 # -----------------------------------------
 # Read CGI file
 # -----------------------------------------
-cgi_file <- "../files/cgi_1000_inter_ids.RData"
+cgi_file <- "../files/cgi_500_inter_ids.RData"
 load(cgi_file)
 
 # -----------------------------------------
@@ -50,6 +50,7 @@ inters_cell <- list()
 for (i in 1:length(k562_files)){
   inters_cell[[i]] <- Reduce(intersect, list(k562[[i]]$V1, gm[[i]]$V1, h1[[i]]$V1))
   print(length(inters_cell[[i]]))
+  message("Cluster ", i, " Venn intersection --> ", length(inters_cell[[i]])/length(gm[[i]]$V1))
 }
 message("\n\n")
 
@@ -57,6 +58,7 @@ cgi_clust_inters <- list()
 for (i in 1:length(k562_files)){
   cgi_clust_inters[[i]] <- Reduce(intersect, list(cgi_inters$ensembl_id, inters_cell[[i]]))
   print(length(cgi_clust_inters[[i]]))
+  message("Cluster ", i, " CGI intersection --> ", length(cgi_clust_inters[[i]])/length(inters_cell[[i]]))
 }
 
 
