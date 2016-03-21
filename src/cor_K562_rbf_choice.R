@@ -83,7 +83,7 @@ is_parallel <- TRUE
 no_cores    <- 3
 is_summary  <- TRUE
 
-basis_prof <- rbf.object(M = 9)
+basis_prof <- rbf.object(M = 5, gamma = 14)
 basis_mean <- polynomial.object(M = 0)
 
 
@@ -126,7 +126,7 @@ out_mean <- mpgex_regr(formula = formula,
 # --------------------------------------
 # Store the results
 # --------------------------------------
-filename <- paste0("../files/choice_corr_K562_",
+filename <- paste0("../files/choice_corr_K562_5_",
                    format(Sys.time(), "%a%b%d%H%M"),
                    ".RData")
 save(HTS_data, proc_data, out_prof, out_mean, file = filename)

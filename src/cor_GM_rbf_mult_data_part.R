@@ -83,7 +83,7 @@ is_parallel <- TRUE
 no_cores    <- 3
 is_summary  <- TRUE
 
-basis_prof <- rbf.object(M = 9)
+basis_prof <- rbf.object(M = 5, gamma = 14)
 basis_mean <- polynomial.object(M = 0)
 
 # Number of iterations
@@ -195,7 +195,7 @@ for (i in 1:iter){
 # --------------------------------------
 # Store the results
 # --------------------------------------
-filename <- paste0("../files/model_corr_GM_",
+filename <- paste0("../files/model_corr_GM_5_",
                    format(Sys.time(), "%a%b%d%H%M"),
                    ".RData")
 save(HTS_data, proc_data, out_prof_full, out_prof_rmse, out_prof_cpg, 

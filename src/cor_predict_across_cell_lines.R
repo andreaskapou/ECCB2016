@@ -40,7 +40,7 @@ is_parallel <- TRUE
 no_cores    <- 3
 is_summary  <- TRUE
 
-basis_prof <- rbf.object(M = 9)
+basis_prof <- rbf.object(M = 5, gamma = 14)
 basis_mean <- polynomial.object(M = 0)
 
 
@@ -281,7 +281,7 @@ H1_out_mean <- mpgex_regr(formula = formula,
 # --------------------------------------
 # Store the results
 # --------------------------------------
-filename <- paste0("../files/across_cell_line_corr_",
+filename <- paste0("../files/across_cell_line_corr_5_",
                    format(Sys.time(), "%a%b%d%H%M"),
                    ".RData")
 save(K562_HTS_data, K562_proc_data, K562_out_prof, K562_out_mean, 
