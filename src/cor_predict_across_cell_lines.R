@@ -37,7 +37,7 @@ train_perc  <- 0.9
 opt_method  <- "CG"
 opt_itnmax  <- 50
 is_parallel <- TRUE
-no_cores    <- 3
+no_cores    <- 10
 is_summary  <- TRUE
 
 basis_prof <- rbf.object(M = 5, gamma = 14)
