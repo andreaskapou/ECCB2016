@@ -67,7 +67,7 @@ seed        <- 1234
 K           <- 5
 pi_k        <- NULL
 w           <- NULL
-basis       <- rbf.object(M = 4)
+basis       <- rbf.object(M = 9)
 em_max_iter <- 20
 epsilon_conv <- 1e-4
 opt_method  <- "CG"
@@ -95,7 +95,7 @@ mix_model <- mpgex_cluster(x     = proc_data$obs,
 # --------------------------------------
 # Store the results
 # --------------------------------------
-filename <- paste0("../files/final_cluster_H1_7000_5_4_",
+filename <- paste0("../files/final_cluster_H1_7000_5_9_",
                    format(Sys.time(), "%a%b%d%H%M"),
                    ".RData")
 save(HTS_data, proc_data, mix_model, file = filename)
