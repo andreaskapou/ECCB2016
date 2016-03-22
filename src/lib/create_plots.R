@@ -376,7 +376,8 @@ ggplot_cluster_prof <- function(df, main_lab = "Clustered methylation profiles")
          y = "methylation level") +
     ggtitle(main_lab) + 
     scale_y_continuous(breaks = seq(0, 1, by = 0.2)) + 
-    theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
+    scale_x_continuous(breaks=c(-1, 0, 1), labels = c("-7kb", "TSS", "7kb")) + 
+    theme(axis.text.x = element_text(size = 14), #element_text(size=17, angle=90, vjust = 0.4), 
           axis.text.y = element_text(size = 14),
           #axis.title.x = element_text(color="black", size=16),
           axis.title.y = element_text(color="black", size=17),

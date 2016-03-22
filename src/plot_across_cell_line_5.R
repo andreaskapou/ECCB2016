@@ -18,7 +18,7 @@ R.utils::sourceDirectory("lib", modifiedOnly = FALSE)
 # -----------------------------------------
 # Initialize variables
 # -----------------------------------------
-filename <- "../files/across_cell_line_corr_ThuMar031511.RData"
+filename <- "../files/across_cell_line_corr_5_MonMar211804.RData"
 
 # -----------------------------------------
 # Load saved data
@@ -169,9 +169,9 @@ corr_mean <- ggplot_scatt_across_cell_line(output = out_GM_mean_K562,
                                            main_lab = expression(Mean~GM12878 %->% K562), 
                                            is_margins = TRUE)
 
-k562_file <- "../files/model_corr_K562_ThuMar031216.RData"
-gm_file   <- "../files/model_corr_GM_ThuMar031156.RData"
-h1_file   <- "../files/model_corr_H1_ThuMar031152.RData"
+k562_file <- "../files/model_corr_K562_5_MonMar211917.RData"
+gm_file   <- "../files/model_corr_GM_5_MonMar211845.RData"
+h1_file   <- "../files/model_corr_H1_5_MonMar211858.RData"
 
 load(k562_file)
 K562_profile <- out_prof_full[[1]]
@@ -201,7 +201,7 @@ confus_mean <- plot_confusion_corr_matrix(GM_out_mean, out_GM_mean_K562, out_GM_
 
 
 across_cell_plot <- plot_grid(confus_prof, corr_prof, confus_mean,  corr_mean, labels = c("A", "C", "B", ""), 
-          label_size = 25, ncol = 2, nrow = 2)
+                              label_size = 25, ncol = 2, nrow = 2)
 
-# save_plot("../figures/corr-across-cell-lines.pdf", across_cell_plot, ncol = 2, nrow = 2,
-#           base_aspect_ratio = 1.35)
+save_plot("../figures/corr-across-cell-lines-5.pdf", across_cell_plot, ncol = 2, nrow = 2,
+          base_aspect_ratio = 1.35)

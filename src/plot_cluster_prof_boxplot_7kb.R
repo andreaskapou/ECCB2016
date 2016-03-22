@@ -15,33 +15,9 @@ R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 # -----------------------------------------
 # Initialize variables
 # -----------------------------------------
-# k562_file <- "../files/deep_cluster_K562_7000_5_3_7_WedMar091538.RData"
-# gm_file   <- "../files/deep_cluster_GM_7000_5_3_7_WedMar091525.RData"
-# h1_file   <- "../files/deep_cluster_H1_7000_5_3_7_WedMar091531.RData"
-# 
-# k562_file <- "../files/deep_cluster_K562_7000_5_3_WedMar091528.RData"
-# gm_file   <- "../files/deep_cluster_GM_7000_5_3_WedMar091514.RData"
-# h1_file   <- "../files/deep_cluster_H1_7000_5_3_WedMar091515.RData"
-
 k562_file <- "../files/deep_cluster_K562_7000_5_4_WedMar091836.RData"
 gm_file   <- "../files/deep_cluster_GM_7000_5_4_WedMar091825.RData"
 h1_file   <- "../files/deep_cluster_H1_7000_5_4_WedMar091821.RData"
-
-# k562_file <- "../files/deep_cluster_K562_7000_5_4_7_WedMar091846.RData"
-# gm_file   <- "../files/deep_cluster_GM_7000_5_4_7_WedMar091833.RData"
-# h1_file   <- "../files/deep_cluster_H1_7000_5_4_7_WedMar091829.RData"
-
-
-
-k562_file <- "../files/final_cluster_K562_7000_5_4_MonMar211638.RData"
-gm_file   <- "../files/final_cluster_GM_7000_5_4_MonMar211630.RData"
-h1_file   <- "../files/final_cluster_H1_7000_5_4_MonMar211632.RData"
-
-
-k562_file <- "../files/final_cluster_K562_7000_5_9_MonMar211636.RData"
-gm_file   <- "../files/final_cluster_GM_7000_5_9_MonMar211630.RData"
-h1_file   <- "../files/final_cluster_H1_7000_5_9_MonMar211629.RData"
-
 
 
 # -----------------------------------------
