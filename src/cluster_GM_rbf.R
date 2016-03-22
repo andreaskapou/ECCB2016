@@ -68,11 +68,11 @@ K           <- 5
 pi_k        <- NULL
 w           <- NULL
 basis       <- rbf.object(M = 4)
-em_max_iter <- 40
+em_max_iter <- 30
 epsilon_conv <- 1e-4
 opt_method  <- "CG"
-opt_itnmax  <- 70
-init_opt_itnmax <- 70
+opt_itnmax  <- 50
+init_opt_itnmax <- 50
 is_parallel <- TRUE
 no_cores    <- 5
 is_verbose  <- TRUE
