@@ -68,7 +68,7 @@ K           <- 5
 pi_k        <- NULL
 w           <- NULL
 basis       <- rbf.object(M = 4)
-em_max_iter <- 30
+em_max_iter <- 50
 epsilon_conv <- 1e-4
 opt_method  <- "CG"
 opt_itnmax  <- 50
