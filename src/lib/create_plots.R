@@ -366,7 +366,7 @@ ggplot_cluster_prof <- function(df, main_lab = "Clustered methylation profiles")
   prof_plot <- ggplot(df, aes(x = xs, y = y, group = cluster)) + 
     geom_line(aes(colour = cluster), size = 1.1) + 
     scale_colour_manual(values=c("firebrick", "cornflowerblue", "coral", 
-                                 "darkolivegreen4", "darkgoldenrod2"), 
+                                 "darkolivegreen4", "#E69F00"), 
                         name="Cluster",
                         #breaks=c("PrF", "PrR", "PrC", "Pr", "M"),
                         labels=c("1", "2", "3", "4", "5")) +
@@ -409,7 +409,7 @@ ggplot_cluster_expr <- function(df, main_lab = "Gene expression levels"){
   ggplot(df_expr, aes(cluster, expr)) +
     geom_boxplot(aes(fill = cluster), notch = TRUE) + 
     scale_fill_manual(values=c("firebrick", "cornflowerblue", "coral", 
-                               "darkolivegreen4", "darkgoldenrod2"), 
+                               "darkolivegreen4", "#E69F00"), 
                       name="Cluster",
                       #breaks=c("PrF", "PrR", "PrC", "Pr", "M"),
                       labels=c("1", "2", "3", "4", "5")) +
@@ -431,6 +431,52 @@ ggplot_cluster_expr <- function(df, main_lab = "Gene expression levels"){
           text = element_text(size=18))
 }
 
+
+
+my_min <- function(x){
+  xx <- min(x)
+  return(xx - 1.5)
+}
+ggplot_cluster_expr2 <- function(df, main_lab = "Gene expression levels"){
+  library(plyr)
+  library(reshape2)
+  #xlabs <- paste(levels(df$cluster),"\n(N=",table(df$cluster),")",sep="")
+  
+  #df <- ddply(df, .(cluster, cell_line), transform, N = length(cluster))
+  
+  df <- ddply(df,.(cell_line, cluster),transform, N = length(cell_line))
+  
+  df$label <- paste0(df$cluster,"\n","(n=",df$N,")")
+  df$label <- as.character(df$N) 
+  ggplot(df, aes(x = cluster, y = expr)) +
+    geom_boxplot(aes(fill = cluster), outlier.shape = 1, notch = TRUE) + 
+    scale_fill_manual(values=c("firebrick", "cornflowerblue", "coral", 
+                                 "darkolivegreen4", "#E69F00"),
+                        name="Cluster",
+                        #breaks=c("PrF", "PrR", "PrC", "Pr", "M"),
+                        labels=c("1", "2", "3", "4", "5")
+    ) +
+    facet_grid(. ~ cell_line, scales = "free_x", space = "free") +
+    theme_bw() +
+    labs(list(title= "", 
+              x = "", 
+              y = "expression level")) +
+    ggtitle(main_lab) +
+    stat_summary(fun.y = my_min,
+                 aes(label = paste0("", label)), 
+                 geom='text', lwd=5, col='black', cex=5) +
+    scale_y_continuous(breaks = seq(-4.5, 8.5, by = 2)) + 
+    #scale_x_discrete(labels = df$label) +
+    theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
+          axis.text.y = element_text(size = 13), 
+          plot.title = element_text(face="bold", color = "black", size=19),
+          #panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          axis.title.y = element_text(color="black", size = 17),
+          legend.title = element_text(size = 15),
+          legend.text = element_text(size = 14),
+          text = element_text(size=18))
+}
 
 
 create_quad_venn <- function(n1, n2, n3, n4, filename = "venn_diagram.png"){

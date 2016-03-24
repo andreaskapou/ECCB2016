@@ -17,11 +17,11 @@ rrbs_file   <- "../datasets/ENCODE/BS-Seq/wgEncodeHaibMethylRrbsK562HaibSitesRep
 rnaseq_file <- "../datasets/ENCODE/RNA-Seq/GENCODE-v3-K562-rep1.bed"
 hg19_file   <- "../datasets/ENCODE/hg19.chrom.sizes"
 
-upstream    <- -500
-downstream  <- 500
-cpg_density <- 10
+upstream    <- -7000
+downstream  <- 7000
+cpg_density <- 40
 sd_thresh   <- 3e-02
-min_bs_cov  <- 2
+min_bs_cov  <- 1
 ignore_strand <- FALSE
 chr_discarded <- c("chrX", "chrY", "chrM")
 
@@ -129,45 +129,72 @@ out_mean <- mpgex_regr(formula = formula,
 xs <- seq(-1,1,len=2000) # Create some values
 
 #
-# FAM20C methylation profile
+# CCR10 methylation profile
 #
 par(cex=1.25, mai=c(1.37,1.37,.7,.3) )
-t <- 4548 
+t <- 1465
+proc_data$genes$gene_name[t]
 x <- HTS_data$methyl_region[[t]][,1]
 y <- HTS_data$methyl_region[[t]][,3]/HTS_data$methyl_region[[t]][,2]
-xl <- seq(min(x),max(x), (max(x) - min(x))/1000)
+xl <- seq(-1, 1, 0.001)
 plot(x, y, col = "blue3", pch = 22, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
-     xlab = NA, ylab = NA, cex.axis = 1.3)
+     xlab = NA, ylab = NA, cex.axis = 1.3, xaxt = "n")
 mtext(side = 1, "genomic region x", line = 3, cex = 1.8)
 mtext(side = 2, "methylation level", line = 3, cex = 1.8)
-title(main="Gene FAM20C", line = 1, cex.main=1.6)
+axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"))
+title(main="Gene CCR10", line = 1, cex.main=1.6)
 lines(x = xl, y = eval_probit_function(out_mean$basis, xl, out_mean$W_opt[t,]), 
       col = 'cornflowerblue', lwd = 3, lty = 2)
 lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
       col = 'blue2', lwd = 3)
 
-
-dev.print(pdf, "../figures/fam20c.pdf", width = 9, height = 7)
+dev.print(pdf, "../figures/ccr10.pdf", width = 9, height = 7)
 dev.off()
 
 
 #
-# DOCK5 methylation profile
+# PLEKHH3 methylation profile
 #
 par(cex=1.25, mai=c(1.37,1.37,.7,.3) )
-t <- 4847 
+t <- 1464
+proc_data$genes$gene_name[t]
 x <- HTS_data$methyl_region[[t]][,1]
 y <- HTS_data$methyl_region[[t]][,3]/HTS_data$methyl_region[[t]][,2]
-xl <- seq(min(x),max(x), (max(x) - min(x))/1000)
+xl <- seq(-1, 1, 0.001)
 plot(x, y, col = "red3", pch = 21, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
-     xlab = NA, ylab = NA, cex.axis = 1.3)
+     xlab = NA, ylab = NA, cex.axis = 1.3,  xaxt = "n")
 mtext(side = 1, "genomic region x", line = 3, cex = 1.8)
 mtext(side = 2, "methylation level", line = 3, cex = 1.8)
-title(main="Gene DOCK5", line = 1, cex.main=1.6)
+axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"))
+title(main="Gene PLEKHH3", line = 1, cex.main=1.6)
 lines(x = xl, y = eval_probit_function(out_mean$basis, xl, out_mean$W_opt[t,]), 
       col = 'coral', lwd = 3, lty = 2)
 lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
       col = 'red2', lwd = 3)
 
-dev.print(pdf, "../figures/dock5.pdf", width = 9, height = 7)
+dev.print(pdf, "../figures/plekhh3.pdf", width = 9, height = 7)
 dev.off()
+
+
+# #
+# # DOCK5 methylation profile
+# #
+# which(proc_data$genes$gene_name == "DOCK5")
+# xl <- seq(-1, 1, 0.001)
+# 
+# par(cex=1.25, mai=c(1.37,1.37,.7,.3) )
+# t <- 4847 
+# 
+# t <- 1234
+# x <- HTS_data$methyl_region[[t]][,1]
+# y <- HTS_data$methyl_region[[t]][,3]/HTS_data$methyl_region[[t]][,2]
+# xl <- seq(min(x),max(x), (max(x) - min(x))/1000)
+# plot(x, y, col = "red3", pch = 21, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
+#      xlab = NA, ylab = NA, cex.axis = 1.3)
+# mtext(side = 1, "genomic region x", line = 3, cex = 1.8)
+# mtext(side = 2, "methylation level", line = 3, cex = 1.8)
+# title(main="Gene DOCK5", line = 1, cex.main=1.6)
+# lines(x = xl, y = eval_probit_function(out_mean$basis, xl, out_mean$W_opt[t,]), 
+#       col = 'coral', lwd = 3, lty = 2)
+# lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
+#       col = 'red2', lwd = 3)

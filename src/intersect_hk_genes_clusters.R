@@ -20,23 +20,23 @@ hk_genes <- read.table(file = hk_genes_file)
 # -----------------------------------------
 # Read cluster files
 # -----------------------------------------
-k562_files <- c("../results/comm_k562_7000_5_4_clust_1.txt",
-                "../results/comm_k562_7000_5_4_clust_2.txt",
-                "../results/comm_k562_7000_5_4_clust_3.txt",
-                "../results/comm_k562_7000_5_4_clust_4.txt",
-                "../results/comm_k562_7000_5_4_clust_5.txt")
+k562_files <- c("../results/final_comm_k562_7000_5_4_clust_1.txt",
+                "../results/final_comm_k562_7000_5_4_clust_2.txt",
+                "../results/final_comm_k562_7000_5_4_clust_3.txt",
+                "../results/final_comm_k562_7000_5_4_clust_4.txt",
+                "../results/final_comm_k562_7000_5_4_clust_5.txt")
 
-gm_files   <- c("../results/comm_gm_7000_5_4_clust_1.txt",
-                "../results/comm_gm_7000_5_4_clust_2.txt",
-                "../results/comm_gm_7000_5_4_clust_3.txt",
-                "../results/comm_gm_7000_5_4_clust_4.txt",
-                "../results/comm_gm_7000_5_4_clust_5.txt")
+gm_files   <- c("../results/final_comm_gm_7000_5_4_clust_1.txt",
+                "../results/final_comm_gm_7000_5_4_clust_2.txt",
+                "../results/final_comm_gm_7000_5_4_clust_3.txt",
+                "../results/final_comm_gm_7000_5_4_clust_4.txt",
+                "../results/final_comm_gm_7000_5_4_clust_5.txt")
 
-h1_files   <- c("../results/comm_h1_7000_5_4_clust_1.txt",
-                "../results/comm_h1_7000_5_4_clust_2.txt",
-                "../results/comm_h1_7000_5_4_clust_3.txt",
-                "../results/comm_h1_7000_5_4_clust_4.txt",
-                "../results/comm_h1_7000_5_4_clust_5.txt")
+h1_files   <- c("../results/final_comm_h1_7000_5_4_clust_1.txt",
+                "../results/final_comm_h1_7000_5_4_clust_2.txt",
+                "../results/final_comm_h1_7000_5_4_clust_3.txt",
+                "../results/final_comm_h1_7000_5_4_clust_4.txt",
+                "../results/final_comm_h1_7000_5_4_clust_5.txt")
 
 k562 <- list()
 gm <- list()
