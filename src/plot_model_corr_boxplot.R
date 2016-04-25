@@ -250,10 +250,10 @@ model_boxplot <- ggplot(corr, aes(method, r)) +
         panel.grid.minor = element_blank(),
         axis.title.y = element_text(size = 20),
         text = element_text(size=21)) + 
-  ggtitle("Model performances across cell lines")
+  ggtitle("Model performance across cell lines")
   # guides(fill = FALSE)
 
-# ggsave("../figures/model-corr-boxplot.pdf", model_boxplot, width = 11.5, height = 7, units = "in")
+ggsave("../figures/model-corr-boxplot.pdf", model_boxplot, width = 11.5, height = 7, units = "in")
 
 
 

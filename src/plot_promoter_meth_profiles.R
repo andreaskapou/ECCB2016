@@ -139,7 +139,7 @@ y <- HTS_data$methyl_region[[t]][,3]/HTS_data$methyl_region[[t]][,2]
 xl <- seq(-1, 1, 0.001)
 plot(x, y, col = "blue3", pch = 22, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
      xlab = NA, ylab = NA, cex.axis = 1.3, xaxt = "n")
-mtext(side = 1, "genomic region x", line = 3, cex = 1.8)
+mtext(side = 1, "genomic region", line = 3, cex = 1.8)
 mtext(side = 2, "methylation level", line = 3, cex = 1.8)
 axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"))
 title(main="Gene CCR10", line = 1, cex.main=1.6)
@@ -148,7 +148,7 @@ lines(x = xl, y = eval_probit_function(out_mean$basis, xl, out_mean$W_opt[t,]),
 lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
       col = 'blue2', lwd = 3)
 
-dev.print(pdf, "../figures/ccr10.pdf", width = 9, height = 7)
+dev.print(pdf, "../figures/ccr10-2.pdf", width = 10.5, height = 7)
 dev.off()
 
 
@@ -163,7 +163,7 @@ y <- HTS_data$methyl_region[[t]][,3]/HTS_data$methyl_region[[t]][,2]
 xl <- seq(-1, 1, 0.001)
 plot(x, y, col = "red3", pch = 21, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
      xlab = NA, ylab = NA, cex.axis = 1.3,  xaxt = "n")
-mtext(side = 1, "genomic region x", line = 3, cex = 1.8)
+mtext(side = 1, "genomic region", line = 3, cex = 1.8)
 mtext(side = 2, "methylation level", line = 3, cex = 1.8)
 axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"))
 title(main="Gene PLEKHH3", line = 1, cex.main=1.6)
@@ -172,7 +172,7 @@ lines(x = xl, y = eval_probit_function(out_mean$basis, xl, out_mean$W_opt[t,]),
 lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
       col = 'red2', lwd = 3)
 
-dev.print(pdf, "../figures/plekhh3.pdf", width = 9, height = 7)
+dev.print(pdf, "../figures/plekhh3-2.pdf", width = 10.5, height = 7)
 dev.off()
 
 
