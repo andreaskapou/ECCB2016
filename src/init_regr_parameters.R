@@ -37,5 +37,5 @@ is_summary  <- TRUE
 fit_feature   <- "RMSE"
 cpg_dens_feat <- TRUE
 
-basis_prof <- rbf.object(M = 5, gamma = 14)
+basis_prof <- rbf.object(M = 9)
 basis_mean <- polynomial.object(M = 0)
