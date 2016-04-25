@@ -423,7 +423,7 @@ ggplot_cluster_expr <- function(df, main_lab = "Gene expression levels"){
     theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
           axis.text.y = element_text(size = 13), 
           plot.title = element_text(face="bold", color = "black", size=19),
-          #panel.grid.major = element_blank(), 
+          panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(),
           axis.title.y = element_text(color="black", size = 17),
           legend.title = element_text(size = 15),
@@ -435,7 +435,7 @@ ggplot_cluster_expr <- function(df, main_lab = "Gene expression levels"){
 
 my_min <- function(x){
   xx <- min(x)
-  return(xx - 1.5)
+  return(xx - 1.3)
 }
 ggplot_cluster_expr2 <- function(df, main_lab = "Gene expression levels"){
   library(plyr)
@@ -470,8 +470,8 @@ ggplot_cluster_expr2 <- function(df, main_lab = "Gene expression levels"){
     theme(axis.text.x = element_blank(), #element_text(size=17, angle=90, vjust = 0.4), 
           axis.text.y = element_text(size = 13), 
           plot.title = element_text(face="bold", color = "black", size=19),
-          #panel.grid.major = element_blank(), 
-          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(), 
+          #panel.grid.minor = element_blank(),
           axis.title.y = element_text(color="black", size = 17),
           legend.title = element_text(size = 15),
           legend.text = element_text(size = 14),
