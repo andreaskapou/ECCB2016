@@ -50,7 +50,7 @@ inters_cell <- list()
 for (i in 1:length(k562_files)){
   inters_cell[[i]] <- Reduce(intersect, list(k562[[i]]$V1, gm[[i]]$V1, h1[[i]]$V1))
   print(length(inters_cell[[i]]))
-  message("Cluster ", i, " Venn intersection --> ", length(inters_cell[[i]])/length(gm[[i]]$V1))
+  message("Cluster ", i, " Venn intersection --> ", length(inters_cell[[i]])/length(h1[[i]]$V1))
 }
 message("\n\n")
 

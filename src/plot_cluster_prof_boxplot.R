@@ -123,7 +123,7 @@ for (i in 1:length(merged_meth)){
 
 # ----------------------------------------------
 # Create data frame containing all experimental 
-# output for  clustered gene expression levels
+# output for clustered gene expression levels
 # ----------------------------------------------
 df_expr <- data.frame(expr = numeric(), 
                  cluster = character(), 

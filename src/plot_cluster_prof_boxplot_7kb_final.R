@@ -111,11 +111,11 @@ comm_gm_ids <- list()
 comm_h1_ids <- list()
 for (k in 1:K){
   comm_k562_ids[[k]] <- Reduce(intersect, list(inters_cell, k562_gene_ids[[k]]))
-  write(comm_k562_ids[[k]], paste0("../results/final_comm_k562_7000_", K, "_4_clust_", k, ".txt"))
+  #write(comm_k562_ids[[k]], paste0("../results/final_comm_k562_7000_", K, "_4_clust_", k, ".txt"))
   comm_gm_ids[[k]] <- Reduce(intersect, list(inters_cell, gm_gene_ids[[k]]))
-  write(comm_gm_ids[[k]], paste0("../results/final_comm_gm_7000_", K, "_4_clust_", k, ".txt"))
+  #write(comm_gm_ids[[k]], paste0("../results/final_comm_gm_7000_", K, "_4_clust_", k, ".txt"))
   comm_h1_ids[[k]] <- Reduce(intersect, list(inters_cell, h1_gene_ids[[k]]))
-  write(comm_h1_ids[[k]], paste0("../results/final_comm_h1_7000_", K, "_4_clust_", k, ".txt"))
+  #write(comm_h1_ids[[k]], paste0("../results/final_comm_h1_7000_", K, "_4_clust_", k, ".txt"))
 }
 
 
@@ -188,8 +188,8 @@ gg_expr <- ggplot_cluster_expr2(df = df_expr, main_lab = "Clustered expression l
 cluster_plot <- plot_grid(gg_prof, gg_expr, labels = c("A", "B"), 
                           label_size = 20, ncol = 1, nrow = 2)
 
-save_plot("../figures/cluster-profiles.pdf", cluster_plot, ncol = 3, nrow = 2,
-           base_aspect_ratio = 1.4)
+# save_plot("../figures/cluster-profiles.pdf", cluster_plot, ncol = 3, nrow = 2,
+#            base_aspect_ratio = 1.4)
 
 
 # ---------------------------------------

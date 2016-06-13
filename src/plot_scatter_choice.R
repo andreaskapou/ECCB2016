@@ -18,7 +18,7 @@ R.utils::sourceDirectory("lib", modifiedOnly=FALSE)
 k562_file <- "../files/choice_corr_K562_ThuMar031032.RData"
 load(k562_file)
 
-k562_prof <- ggplot_scatt_regr_test2(out_prof, main_lab = "K562 Methylation Profile", is_margins = TRUE)
+k562_prof <- ggplot_scatt_regr_test2(out_prof[[1]], main_lab = "K562 Methylation Profile", is_margins = TRUE)
 k562_mean <- ggplot_scatt_regr_test2(out_mean, main_lab = "K562 Mean Methylation", is_margins = TRUE)
 
 pvalue_prof = cor.test(as.vector(out_prof$test_pred), out_prof$test$y, alternative = "greater")$p.value

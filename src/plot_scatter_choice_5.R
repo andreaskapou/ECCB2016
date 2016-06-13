@@ -27,8 +27,8 @@ pvalue_mean = cor.test(as.vector(out_mean$test_pred), out_mean$test$y, alternati
 corr_plot <- plot_grid(k562_prof, k562_mean, labels = c("A", "B"), 
                        label_size = 29, ncol = 2, nrow = 1)
 
-save_plot("../figures/k562-scatter-5.pdf", corr_plot, ncol = 2, nrow = 1,
-          base_height = 6.5, base_width = 6.5)
+#save_plot("../figures/k562-scatter-5.pdf", corr_plot, ncol = 2, nrow = 1,
+#          base_height = 6.5, base_width = 6.5)
 
 # ggsave("../figures/gg-k562-scatter-profile.pdf", k562_prof, width = 8, height = 8, units = "in")
 # ggsave("../figures/gg-k562-scatter-mean.pdf", k562_mean, width = 8, height = 8, units = "in")
