@@ -123,6 +123,12 @@ out_mean <- mpgex_regr(formula = formula,
 
 
 
+
+# Create plots
+op <- par(no.readonly = TRUE) # the whole list of settable par's.
+par(op)
+
+
 # ------------------------------------------
 # Create plots for FAM20C and DOCK5 gene promoters
 # ------------------------------------------
@@ -185,27 +191,24 @@ for (i in 1:basis_prof$M) {
 }
 
 
-
+# Create plots
+par(op)
 #
 # PLEKHH3 methylation profile
 #
-par(mfrow = c(2,2), mai=c(1.37,1.37,.7,.3))
+par(mfrow = c(1,2), mai=c(0.6,1.1,.7,.3))
 #par(cex=1.25, mai=c(1.37,1.37,.7,.3) )
 t <- 1464
 proc_data$genes$gene_name[t]
 x <- HTS_data$methyl_region[[t]][,1]
 y <- HTS_data$methyl_region[[t]][,3]/HTS_data$methyl_region[[t]][,2]
 xl <- seq(-1, 1, length = 250)
-plot(x, y, col = "red3", pch = 21, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
-     xlab = NA, ylab = NA, cex.axis = 1.1,  xaxt = "n")
-mtext(side = 1, "genomic region", line = 3, cex = 1.1)
-mtext(side = 2, "methylation level", line = 3, cex = 1.1)
-axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"))
-title(main="Observations", line = 1, cex.main=1.3)
-# lines(x = xl, y = eval_probit_function(out_mean$basis, xl, out_mean$W_opt[t,]), 
-#       col = 'coral', lwd = 3, lty = 2)
-# lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
-#       col = 'red2', lwd = 3)
+plot(x, y, col = "black", pch = 1, cex = 0.7, ylim = c(0,1), xlim = c(-1,1), lwd = 1.2,
+     xlab = NA, ylab = NA, cex.axis = 1.2,  xaxt = "n")
+#mtext(side = 1, "genomic region", line = 3, cex = 1.1)
+mtext(side = 2, "methylation level", line = 3, cex = 1.25)
+axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"),  cex.axis = 1.2)
+title(main="Observations", line = 1, cex.main=1.5)
 
 # dev.print(pdf, "../figures/plekhh3-2.pdf", width = 10.5, height = 7)
 # dev.off()
@@ -214,11 +217,11 @@ cols <- c("firebrick", "cornflowerblue", "coral",  "darkolivegreen4", "#E69F00")
 x.coord = seq(-1, 1, length = 250)
 
 ## RBF Centres
-plot(NULL, xlim = c(-1,1), ylim = c(0,1), type = "n", xaxt = "n", xlab = NA, ylab = NA, cex.axis = 1.1)
-mtext(side = 1, "genomic region", line = 3, cex = 1.1)
-mtext(side = 2, "methylation level", line = 3, cex = 1.1)
-axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"))
-title(main="RBF centres", line = 1, cex.main=1.3)
+plot(NULL, xlim = c(-1,1), ylim = c(0,1), type = "n", xaxt = "n", xlab = NA, ylab = NA, cex.axis = 1.2)
+#mtext(side = 1, "genomic region", line = 3, cex = 1.1)
+mtext(side = 2, "methylation level", line = 3, cex = 1.25)
+axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"), cex.axis = 1.2)
+title(main="RBF centres", line = 1, cex.main=1.5)
 points(basis_prof$mus, rep(0, basis_prof$M), col=cols[1:basis_prof$M], pch=19)
 for (i in 1:basis_prof$M) {
   points(x.coord, pnorm(apply(X = as.matrix(x.coord), 
@@ -226,15 +229,21 @@ for (i in 1:basis_prof$M) {
                         FUN = rbf_basis,
                         mus = basis_prof$mus[i],
                         gamma = basis_prof$gamma)), 
-         type="l", lwd=2, col=cols[i])
+         type="l", lwd=1.4, col=cols[i])
 }
+#legend("bottomleft", c("RBF 1", "RBF 2", "RBF 3", "RBF 4"), lty=1, lwd=1.5,
+#       col=cols[1:4], bty='n', cex=.88)
+
+
 
 ## Fit RBFs using BPR
-plot(NULL, xlim = c(-1,1), ylim = c(0,1), type = "n", xaxt = "n", xlab = NA, ylab = NA, cex.axis = 1.1)
-mtext(side = 1, "genomic region", line = 3, cex = 1.1)
-mtext(side = 2, "methylation level", line = 3, cex = 1.1)
-axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"))
-title(main="Learn coefficients using BPR model", line = 1, cex.main=1.3)
+par(op)
+par(mai=c(1.3,1.2,.7,.3))
+plot(NULL, xlim = c(-1,1), ylim = c(0,1), type = "n", xaxt = "n", xlab = NA, ylab = NA, cex.axis = 1.2)
+mtext(side = 1, "genomic region", line = 3, cex = 1.25)
+mtext(side = 2, "methylation level", line = 3, cex = 1.25)
+axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"), cex.axis = 1.2)
+title(main="Learn RBF coefficients using BPR model", line = 1, cex.main=1.6)
 points(basis_prof$mus, rep(0, basis_prof$M), col=cols[1:basis_prof$M], pch=19)
 for (i in 1:basis_prof$M) {
   evals <- pnorm(out_prof$W_opt[t,1] * apply(X = as.matrix(x.coord), 
@@ -247,19 +256,25 @@ for (i in 1:basis_prof$M) {
                                                  FUN = rbf_basis,
                                                  mus = basis_prof$mus[i],
                                                  gamma = basis_prof$gamma))
-  points(x.coord, evals, type="l", lwd=2, col=cols[i])
+  points(x.coord, evals, type="l", lwd=2.4, col=cols[i])
 }
+legend("bottomleft", c("RBF 1", "RBF 2", "RBF 3", "RBF 4"), lty=1, lwd=1.5,
+       col=cols[1:4], bty='n', cex=.92)
 
 
 ## Linear combination
-plot(x, y, col = "red3", pch = 21, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
-     xlab = NA, ylab = NA, cex.axis = 1.1,  xaxt = "n")
-mtext(side = 1, "genomic region", line = 3, cex = 1.1)
-mtext(side = 2, "methylation level", line = 3, cex = 1.1)
-axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"))
-title(main="Linear combination of RBFs", line = 1, cex.main=1.3)
+par(op)
+par(mai=c(1.3,1.2,.7,.3))
+#plot(x, y, col = "red3", pch = 21, ylim = c(0,1), xlim = c(-1,1), lwd = 2,
+#     xlab = NA, ylab = NA, cex.axis = 1.1,  xaxt = "n")
+plot(x, y, col = "black", pch = 1, cex = 0.7, ylim = c(0,1), xlim = c(-1,1), lwd = 1.2,
+     xlab = NA, ylab = NA, cex.axis = 1.2,  xaxt = "n")
+mtext(side = 1, "genomic region", line = 3, cex = 1.25)
+mtext(side = 2, "methylation level", line = 3, cex = 1.25)
+axis(side = 1, at = c(-1, 0, 1), labels=c("-7kb", "TSS", "+7kb"), cex.axis = 1.2)
+title(main="Linear combination of RBFs", line = 1, cex.main=1.6)
 lines(x = xl, y = eval_probit_function(out_prof$basis, xl, out_prof$W_opt[t,]), 
-      col = 'red2', lwd = 3)
+      col = 'red2', lwd = 2.5)
 
 # #
 # # DOCK5 methylation profile
